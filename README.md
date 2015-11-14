@@ -1,6 +1,6 @@
 # Web Panel
 
-Web Panel is and Opera sidebar extension. It allows you to visit web pages in the sidebar, and adds basic functionality like bookmarks.
+Web Panel is an Opera sidebar extension. It allows you to visit web pages in the sidebar, and adds basic functionality like bookmarks.
 
 ### Installation
 
