@@ -1,0 +1,95 @@
+* {
+	box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+}
+#bar {
+  z-index: 10;
+  position: relative;
+	height: 30px;
+	background-color: #F2F2F2;
+	border-bottom: 1px solid #A6A6A6;
+}
+#reload, #bookmarks, #add-bookmark {
+  height: 29px;
+  width: 29px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#reload:focus, #bookmarks:focus, #add-bookmark:focus {
+  outline: none;
+}
+#reload {
+  background-image: url("icons/reload.png");
+  background-size: 18px 18px;
+}
+#add-bookmark {
+	background-image: url("icons/add.png");
+	background-size: 18px 18px;
+	border-right: 1px solid #A6A6A6;
+}
+#bookmarks {
+  background-image: url("icons/bookmarks.png");
+  background-size: 12px 18px;
+}
+#bookmarks-popup {
+  z-index: 0;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: #F2F2F2;
+  box-shadow: 0 0 15px 8px gray;
+}
+#bookmarks-popup .box {
+	position: relative;
+  height: 30px;
+	overflow: hidden;
+	cursor: pointer;
+}
+#bookmarks-popup .favicon-img {
+	position: absolute;
+  width: 16px;
+	top: 7px;
+	left: 7px;
+}
+#bookmarks-popup .text-box {
+	width: calc(100% - 30px);
+	position: absolute;
+	left: 30px;
+}
+#bookmarks-popup .box:hover .text-box {
+	background-color: lightgray;
+}
+#bookmarks-popup .link {
+	display: inline-block;
+  margin-left: 10px;
+  margin: 5px;
+  font-size: 15px;
+}
+#url {
+  width: calc(100% - 99px);
+  position: relative;
+  top: -8px;
+  height: 100%;
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 15px;
+  border-left: 1px solid #A6A6A6;
+  background-color: #F2F2F2;
+}
+#url:focus {
+  outline: none;
+}
+#iframe {
+	width: 100%;
+	height: calc(100% - 30px);
+	border: none;
+}

@@ -1,0 +1,14 @@
+Summary:
+
+Navigate to websites in the sidebar.
+
+Detailed description:
+
+With this extension, you can surf to any website in the sidebar. You can also bookmark pages that you visit often. As the bookmarks relies on Opera's built in bookmark manager, they will automatically sync between your devices.
+
+Features:
+ - Surf to any site in the sidebar
+ - Bookmark sites that you visit often
+ - Delete bookmarks by right-clicking on them
+
+If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (Also called "Imported bookmarks"), and enter the folder "Web Panel extension".
