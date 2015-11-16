@@ -1,10 +1,12 @@
 * {
 	box-sizing: border-box;
 }
+
 html, body {
 	margin: 0;
 	padding: 0;
 }
+
 #bar {
   z-index: 10;
   position: relative;
@@ -12,7 +14,8 @@ html, body {
 	background-color: #F2F2F2;
 	border-bottom: 1px solid #A6A6A6;
 }
-#reload, #bookmarks, #add-bookmark {
+
+#reload, #bookmarks, #add-bookmark, #expand, #back, #forward {
   height: 29px;
   width: 29px;
   background: none;
@@ -20,61 +23,54 @@ html, body {
   cursor: pointer;
   background-repeat: no-repeat;
   background-position: center;
+	background-color: #F2F2F2;
 }
-#reload:focus, #bookmarks:focus, #add-bookmark:focus {
+
+#reload:focus, #bookmarks:focus, #add-bookmark:focus, #expand:focus, #back:focus, #forward:focus {
   outline: none;
 }
+
 #reload {
+	position: relative;
+	z-index: 10;
   background-image: url("icons/reload.png");
   background-size: 18px 18px;
+	float: left;
 }
-#add-bookmark {
-	background-image: url("icons/add.png");
-	background-size: 18px 18px;
-	border-right: 1px solid #A6A6A6;
-}
-#bookmarks {
-  background-image: url("icons/bookmarks.png");
-  background-size: 12px 18px;
-}
-#bookmarks-popup {
-  z-index: 0;
-  display: none;
-  width: 100%;
-  position: absolute;
-  top: 30px;
-  left: 0;
-  background: #F2F2F2;
-  box-shadow: 0 0 15px 8px gray;
-}
-#bookmarks-popup .box {
+
+#expand-content {
 	position: relative;
-  height: 30px;
-	overflow: hidden;
-	cursor: pointer;
+	float: left;
+	height: 29px; /* temp */
 }
-#bookmarks-popup .favicon-img {
-	position: absolute;
-  width: 16px;
-	top: 7px;
-	left: 7px;
+
+#back {
+	background-image: url("icons/back.png");
+	background-size: auto 15px;
 }
-#bookmarks-popup .text-box {
-	width: calc(100% - 30px);
-	position: absolute;
-	left: 30px;
+
+#forward {
+	background-image: url("icons/forward.png");
+	background-size: auto 15px;
 }
-#bookmarks-popup .box:hover .text-box {
+
+#expand {
+	background-image: url("icons/expand.png");
+  background-size: auto 18px;
+	width: 10px;
+	float: left;
+}
+
+#expand:hover {
 	background-color: lightgray;
 }
-#bookmarks-popup .link {
-	display: inline-block;
-  margin-left: 10px;
-  margin: 5px;
-  font-size: 15px;
+
+#center {
+	overflow: hidden;
 }
+
 #url {
-  width: calc(100% - 99px);
+  width: calc(100% - 32px);
   position: relative;
   top: -8px;
   height: 100%;
@@ -85,9 +81,65 @@ html, body {
   border-left: 1px solid #A6A6A6;
   background-color: #F2F2F2;
 }
+
 #url:focus {
   outline: none;
 }
+
+#add-bookmark {
+	background-image: url("icons/add.png");
+	background-size: 18px 18px;
+	border-right: 1px solid #A6A6A6;
+}
+
+#bookmarks {
+  background-image: url("icons/bookmarks.png");
+  background-size: 12px 18px;
+	float: right;
+}
+
+#bookmarks-popup {
+  z-index: 0;
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: #F2F2F2;
+  box-shadow: 0 0 15px 8px gray;
+}
+
+#bookmarks-popup .box {
+	position: relative;
+  height: 30px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#bookmarks-popup .favicon-img {
+	position: absolute;
+  width: 16px;
+	top: 7px;
+	left: 7px;
+}
+
+#bookmarks-popup .text-box {
+	width: calc(100% - 30px);
+	position: absolute;
+	left: 30px;
+}
+
+#bookmarks-popup .box:hover .text-box {
+	background-color: lightgray;
+}
+
+#bookmarks-popup .link {
+	display: inline-block;
+  margin-left: 10px;
+  margin: 5px;
+  font-size: 15px;
+}
+
 #iframe {
 	width: 100%;
 	height: calc(100% - 30px);

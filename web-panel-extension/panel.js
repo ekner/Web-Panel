@@ -6,8 +6,22 @@ var bookmarksButton = document.getElementById("bookmarks");
 var bookmarksPopup  = document.getElementById("bookmarks-popup");
 var addBookmark    =  document.getElementById("add-bookmark");
 
-// Other variables:
-var wpb; //web panel bookmarks
+var wpb; //web panel bookmarks folder id
+var historyArray = new Array(); // History
+var currentPos = -1; // Current position in history
+
+/* Get stored history information */
+chrome.storage.local.get(['historyArray', 'currentPos'], function(object) {
+  if ( typeof object.historyArray != "undefined" && typeof object.currentPos != "undefined") {
+    historyArray = object.historyArray;
+    currentPos = object.currentPos;
+  }
+});
+
+/* Function for storing current history information */
+function storeHistory() {
+  chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
+}
 
 chrome.storage.local.get('lastSite', function(object) {
   if ( typeof object.lastSite == "undefined") {
@@ -22,8 +36,42 @@ chrome.storage.local.get('lastSite', function(object) {
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
   if (message.fromCnt && !sender.frameId) {
-    console.log(message.link); // debug
     url.value = message.link;
+
+    // Check if the page was just reloaded:
+    if (historyArray[historyArray.length - 1] != message.link) {
+      // Check if the page was navigated to via history buttons. Then it shouldn't be added to history again:
+      if (historyArray[currentPos] != message.link) {
+        historyArray.length = currentPos + 1;
+        historyArray.push(message.link);
+
+        // Max length 25:
+        if (historyArray.length > 25) {
+          historyArray.shift();
+        } else {
+          currentPos++;
+        }
+
+        storeHistory();
+      }
+      chrome.storage.local.set({'lastSite': url.value});
+    }
+  }
+});
+
+$("#back").click(function() {
+  if (currentPos > 0) {
+    currentPos --;
+    iframe.src = historyArray[currentPos];
+    storeHistory();
+  }
+});
+
+$("#forward").click(function() {
+  if (currentPos + 1 != historyArray.length) {
+    currentPos ++;
+    iframe.src = historyArray[currentPos];
+    storeHistory();
   }
 });
 
@@ -31,12 +79,10 @@ function changeUrl() {
   var search = url.value.match(/^[a-zA-Z]+:\/\//i);
 
   if (search == null) {
-    iframe.src = "http://" + url.value;
+    $("#iframe").attr('src', "http://" + url.value);
   } else {
-    iframe.src = url.value;
+    $("#iframe").attr('src', url.value);
   }
-
-  chrome.storage.local.set({'lastSite': url.value});
 }
 
 reloadButton.onclick = function() {
@@ -167,8 +213,31 @@ function fadeOut() {
   bookmarksPopupClosed = true;
 }
 
-/*
-iframe.onload=function() {
-  alert(iframe.contentWindow.history.back());
-};
-*/
+var expandContentWidth = $("#expand-content").outerWidth();
+$("#expand-content").css({marginLeft: "-61px"});
+var expandOpen = false;
+
+function expand() {
+  if (!expandOpen) {
+    chrome.storage.local.set({'expandOpen': 'true'});
+    $("#expand-content").animate({
+      marginLeft: "0px"
+    }, 200 );
+  } else {
+    chrome.storage.local.set({'expandOpen': 'false'});
+    $("#expand-content").animate({
+      marginLeft: "-61px"
+    }, 200 );
+  }
+  expandOpen = !expandOpen;
+}
+
+$("#expand").click(function() {
+  expand();
+});
+
+chrome.storage.local.get('expandOpen', function(object) {
+  if ( object.expandOpen == "true") {
+    expand();
+  }
+});
