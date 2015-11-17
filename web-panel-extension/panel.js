@@ -1,5 +1,4 @@
 // Get the elements:
-var iframe          = document.getElementById('iframe'); // tesssssssssssst
 var url             = document.getElementById("url");
 var reloadButton    = document.getElementById("reload");
 var bookmarksButton = document.getElementById("bookmarks");
@@ -26,17 +25,17 @@ function storeHistory() {
 chrome.storage.local.get('lastSite', function(object) {
   if ( typeof object.lastSite == "undefined") {
     chrome.storage.local.set({'lastSite': 'example.com'});
-    url.value = "example.com";
+    $("#url").val("example.com");
     changeUrl();
   } else {
-    url.value = object.lastSite;
+    $("#url").val(object.lastSite);
     changeUrl();
   }
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
   if (message.fromCnt && !sender.frameId) {
-    url.value = message.link;
+    $("#url").val(message.link);
 
     // Check if the page was just reloaded:
     if (historyArray[historyArray.length - 1] != message.link) {
@@ -54,7 +53,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 
         storeHistory();
       }
-      chrome.storage.local.set({'lastSite': url.value});
+      chrome.storage.local.set({'lastSite': $("#url").val() });
     }
   }
 });
@@ -62,7 +61,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 $("#back").click(function() {
   if (currentPos > 0) {
     currentPos --;
-    iframe.src = historyArray[currentPos];
+    $("#iframe").attr('src', historyArray[currentPos]);
     storeHistory();
   }
 });
@@ -70,18 +69,18 @@ $("#back").click(function() {
 $("#forward").click(function() {
   if (currentPos + 1 != historyArray.length) {
     currentPos ++;
-    iframe.src = historyArray[currentPos];
+    $("#iframe").attr('src', historyArray[currentPos]);
     storeHistory();
   }
 });
 
 function changeUrl() {
-  var search = url.value.match(/^[a-zA-Z]+:\/\//i);
+  var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
 
   if (search == null) {
-    $("#iframe").attr('src', "http://" + url.value);
+    $("#iframe").attr('src', "http://" + $("#url").val());
   } else {
-    $("#iframe").attr('src', url.value);
+    $("#iframe").attr('src', $("#url").val());
   }
 }
 
@@ -89,21 +88,22 @@ reloadButton.onclick = function() {
 	changeUrl();
 }
 
-url.onkeypress = function(e){
-  if (e.keyCode == '13'){
-    changeUrl();
-    return false;
+$("#url").keypress(function( event ) {
+  if ( event.which == 13 ) {
+     event.preventDefault();
+     changeUrl();
+     return false;
   }
-}
+});
 
 addBookmark.onclick = function createBookmark() {
-  if (url.value != "") {
-    var title = prompt("Bookmark title:", url.value);
+  if ($("#url").val() != "") {
+    var title = prompt("Bookmark title:", $("#url").val() );
     if (title == "") {
       alert("Please type a title for the bookmark. Press cancel on the next pop-up to escape.");
       createBookmark();
     } else if (title != null) {
-      chrome.bookmarks.create({'parentId': wpb, 'url': url.value, 'title': title}, function(result) {
+      chrome.bookmarks.create({'parentId': wpb, 'url': $("#url").val(), 'title': title}, function(result) {
         if (result === undefined) {
           alert("Bookmark not created: " + chrome.extension.lastError.message);
         }
@@ -137,7 +137,6 @@ chrome.bookmarks.search("Web Panel extension", function(list) {
 });
 
 function loadBookmarks() {
-  var bookmarks = [];
   chrome.bookmarks.getChildren(wpb, function(result) {
     var content = "";
     result.forEach(function(entry) {
@@ -149,33 +148,27 @@ function loadBookmarks() {
       entry.url = entry.url.replace(re, "");
 
       // ES6 multi-line string with backticks, Opera 28+:
-      content += `<div extension="tes t" title="` + entry.url + `" class="box">
+      content += `<div data-id="` + entry.id + `" title="` + entry.url + `" class="box">
                   <img class="favicon-img" src="http://www.google.com/s2/favicons?domain=` + entry.url + `"></img>
                   <div class="text-box"><p class="link">` + entry.title + `</p></div>
                   </div>`;
-      bookmarks.push({id: entry.id, url: entry.url});
     });
     bookmarksPopup.innerHTML = content;
 
-    var links = document.getElementsByClassName("box");
-    for (var i = 0; i < links.length; i++) {
-      (function() {
-        var thisNumber = i;
-        links[i].oncontextmenu = function(e) {
-          e.preventDefault();
-          chrome.bookmarks.remove(bookmarks[thisNumber].id, function() {
-            loadBookmarks();
-          });
-        }
-        links[i].onclick = function(e) {
-          if (e.button == 0) {
-            url.value = bookmarks[thisNumber].url;
-            changeUrl();
-            fadeOut();
-          }
-        }
-      })();
-    }
+    $(".box").on('contextmenu', function(e){
+      e.preventDefault();
+      chrome.bookmarks.remove( $(this).attr("data-id"), function() {
+        loadBookmarks();
+      });
+    });
+    $('.box').mousedown(function(event) {
+      if (event.which == 1) {
+        $("#url").val( $(this).attr("title") );
+        changeUrl();
+        fadeOut();
+      }
+    });
+
   });
 }
 
