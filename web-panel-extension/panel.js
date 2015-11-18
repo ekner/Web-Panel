@@ -1,10 +1,3 @@
-// Get the elements:
-var url             = document.getElementById("url");
-var reloadButton    = document.getElementById("reload");
-var bookmarksButton = document.getElementById("bookmarks");
-var bookmarksPopup  = document.getElementById("bookmarks-popup");
-var addBookmark    =  document.getElementById("add-bookmark");
-
 var wpb; //web panel bookmarks folder id
 var historyArray = new Array(); // History
 var currentPos = -1; // Current position in history
@@ -84,9 +77,9 @@ function changeUrl() {
   }
 }
 
-reloadButton.onclick = function() {
-	changeUrl();
-}
+$("#reload").click(function() {
+  changeUrl();
+});
 
 $("#url").keypress(function( event ) {
   if ( event.which == 13 ) {
@@ -96,7 +89,7 @@ $("#url").keypress(function( event ) {
   }
 });
 
-addBookmark.onclick = function createBookmark() {
+function createBookmark() {
   if ($("#url").val() != "") {
     var title = prompt("Bookmark title:", $("#url").val() );
     if (title == "") {
@@ -114,6 +107,8 @@ addBookmark.onclick = function createBookmark() {
     alert("You haven't entered a url.");
   }
 }
+
+$("#add-bookmark").click(createBookmark);
 
 chrome.bookmarks.search("Web Panel extension", function(list) {
   if (typeof list[0] == "undefined") {
@@ -139,21 +134,25 @@ chrome.bookmarks.search("Web Panel extension", function(list) {
 function loadBookmarks() {
   chrome.bookmarks.getChildren(wpb, function(result) {
     var content = "";
-    result.forEach(function(entry) {
-      if (typeof entry.url == "undefined") {
-        return; // If it's a folder, skip it
-      }
-      var re = /(<([^>]+)>)/ig;
-      entry.title = entry.title.replace(re, "");
-      entry.url = entry.url.replace(re, "");
+    if (result.length == 0) {
+      content = "<h3 style='margin-left: 10px;'>You have no bookmarks</h3>";
+    } else {
+      result.forEach(function(entry) {
+        if (typeof entry.url == "undefined") {
+          return; // If it's a folder, skip it
+        }
+        var re = /(<([^>]+)>)/ig;
+        entry.title = entry.title.replace(re, "");
+        entry.url = entry.url.replace(re, "");
 
-      // ES6 multi-line string with backticks, Opera 28+:
-      content += `<div data-id="` + entry.id + `" title="` + entry.url + `" class="box">
-                  <img class="favicon-img" src="http://www.google.com/s2/favicons?domain=` + entry.url + `"></img>
-                  <div class="text-box"><p class="link">` + entry.title + `</p></div>
-                  </div>`;
-    });
-    bookmarksPopup.innerHTML = content;
+        // ES6 multi-line string with backticks, Opera 28+:
+        content += `<div data-id="` + entry.id + `" title="` + entry.url + `" class="box">
+                    <img class="favicon-img" src="http://www.google.com/s2/favicons?domain=` + entry.url + `"></img>
+                    <div class="text-box"><p class="link">` + entry.title + `</p></div>
+                    </div>`;
+      });
+    }
+    $("#bookmarks-popup").html(content);
 
     $(".box").on('contextmenu', function(e){
       e.preventDefault();
@@ -173,36 +172,25 @@ function loadBookmarks() {
 }
 
 var bookmarksPopupClosed = true;
-bookmarksButton.onclick = function() {
+
+$("#bookmarks").click(function() {
   if (bookmarksPopupClosed) {
     fadeIn();
   } else {
     fadeOut();
   }
-}
+});
 
 function fadeIn() {
-  bookmarksPopup.style.display = "block";
-  var animateIn = function() {
-    bookmarksPopup.style.opacity = +bookmarksPopup.style.opacity + 0.20;
-    if (+bookmarksPopup.style.opacity < 1) {
-      requestAnimationFrame(animateIn);
-    }
-  }
-  requestAnimationFrame(animateIn);
+  //$("#bookmarks-popup").css("display", "block");
+  $("#bookmarks-popup").fadeIn(100);
   bookmarksPopupClosed = false;
 }
 
 function fadeOut() {
-  var animateOut = function() {
-    bookmarksPopup.style.opacity = +bookmarksPopup.style.opacity - 0.20;
-    if (+bookmarksPopup.style.opacity > 0) {
-      requestAnimationFrame(animateOut);
-    } else {
-      bookmarksPopup.style.display = "none";
-    }
-  }
-  requestAnimationFrame(animateOut);
+  $("#bookmarks-popup").fadeOut(100, function() {
+    //$("#bookmarks-popup").css("display", "none");
+  });
   bookmarksPopupClosed = true;
 }
 

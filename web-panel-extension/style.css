@@ -70,7 +70,7 @@ html, body {
 }
 
 #url {
-  width: calc(100% - 32px);
+  width: calc(100% - 33px);
   position: relative;
   top: -8px;
   height: 100%;
