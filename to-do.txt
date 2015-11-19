@@ -1,6 +1,7 @@
-Auto-reload options by righ-clicking on reload-button
+warn that this extension may NOT load some sites, such as vk.com in description
 Loading-icon on the iframe
 change user agent
-Certificates
-back and forward
+zoom
+
+Auto-reload options by righ-clicking on reload-button
 folder support?
