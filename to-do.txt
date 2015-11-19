@@ -1,5 +1,4 @@
 warn that this extension may NOT load some sites, such as vk.com in description
-Loading-icon on the iframe
 change user agent
 zoom
 

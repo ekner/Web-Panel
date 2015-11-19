@@ -29,6 +29,7 @@ chrome.storage.local.get('lastSite', function(object) {
 chrome.runtime.onMessage.addListener(function(message, sender) {
   if (message.fromCnt && !sender.frameId) {
     $("#url").val(message.link);
+    $("#loading").css("display", "none");
 
     // Check if the page was just reloaded:
     if (historyArray[historyArray.length - 1] != message.link) {
@@ -53,6 +54,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 
 $("#back").click(function() {
   if (currentPos > 0) {
+    $("#loading").css("display", "block");
     currentPos --;
     $("#iframe").attr('src', historyArray[currentPos]);
     storeHistory();
@@ -61,6 +63,7 @@ $("#back").click(function() {
 
 $("#forward").click(function() {
   if (currentPos + 1 != historyArray.length) {
+    $("#loading").css("display", "block");
     currentPos ++;
     $("#iframe").attr('src', historyArray[currentPos]);
     storeHistory();
@@ -68,6 +71,8 @@ $("#forward").click(function() {
 });
 
 function changeUrl() {
+  $("#loading").css("display", "block");
+
   var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
 
   if (search == null) {
