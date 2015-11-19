@@ -12,3 +12,4 @@ development version:
 
 1.2
   Now other protocols than http and https works. (file:// for example)
+  Back and forward buttons
