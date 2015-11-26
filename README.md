@@ -8,7 +8,7 @@ Web Panel is an Opera sidebar extension. It allows you to visit web pages in the
 
 Download it from here: https://addons.opera.com/extensions/details/web-panel/
 
-#### From source
+#### From source (latest version)
 
 1. Click "Download ZIP" to the right.
 2. Unpack the archive
