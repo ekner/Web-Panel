@@ -128,7 +128,7 @@ function loadBookmarks()
       {
         if (typeof entry.url === "undefined")
           return; // If it's a folder, skip it
-          
+
         var re = /(<([^>]+)>)/ig;
         entry.title = entry.title.replace(re, "");
         entry.url = entry.url.replace(re, "");
@@ -196,10 +196,10 @@ var autoReload = false;
 function openAutoReload()
 {
   displayAutoReload = false;
-      
+
   $("#auto-reload").css("left", event.pageX);
   $("#auto-reload").css("top", event.pageY);
-  
+
   $("#auto-reload").css("display", "block");
 }
 
@@ -236,13 +236,13 @@ $("#auto-reload .close").click(function()
 function setReload(time, item)
 {
   removeReload();
-  
+
   autoReload = setInterval(function()
   {
     changeUrl();
   },
   time * 1000);
-  
+
   $(item).css("color", "lightblue");
   $("#reload").css("background-color", "lightblue");
   $("#auto-reload .clear").css("display", "block");
@@ -253,10 +253,10 @@ function removeReload()
   $("#auto-reload li").css("color", "black");
   $("#reload").css("background-color", "transparent");
   $("#auto-reload .clear").css("display", "none");
-  
+
   if (autoReload != false)
     clearInterval(autoReload);
-    
+
   closeAutoReload();
 }
 
@@ -265,11 +265,11 @@ $("#auto-reload li").click(function()
   // The Value the user clicked on on the list:
   var item = this;
   var time = Number( $(this).attr("data-time") );
-  
+
   // Security, if the user has modified the HTML:
   if (isNaN(time))
     return;
-  
+
   if (time != 0)
   {
     setReload(time, item);
@@ -282,7 +282,7 @@ $("#auto-reload li").click(function()
       if ( typeof object.lastCustomTime !== "undefined")
         lastCustomTime = object.lastCustomTime;
     });
-    
+
     time = "";
     var wrong = "";
     while (time != null && time.match(/^\d+:\d+:\d+$/) == null || time == "0:0:0")
@@ -293,7 +293,7 @@ $("#auto-reload li").click(function()
     // If the user has pressed cancel on the prompt:
     if (time == null)
       return;
-    
+
     chrome.storage.local.set({'lastCustomTime': time});
     var values = time.split(":");
     time = Number(values[0]) * 3600 + Number(values[1]) * 60 + Number(values[2]);
