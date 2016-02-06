@@ -15,7 +15,7 @@ html, body {
 	border-bottom: 1px solid #A6A6A6;
 }
 
-#reload, #bookmarks, #add-bookmark, #expand, #back, #forward {
+#reload, #bookmarks, #add-bookmark {
   height: 29px;
   width: 29px;
   background: none;
@@ -26,7 +26,7 @@ html, body {
 	background-color: #F2F2F2;
 }
 
-#reload:focus, #bookmarks:focus, #add-bookmark:focus, #expand:focus, #back:focus, #forward:focus {
+#reload:focus, #bookmarks:focus, #add-bookmark:focus {
   outline: none;
 }
 
@@ -36,33 +36,6 @@ html, body {
   background-image: url("icons/reload.png");
   background-size: 18px 18px;
 	float: left;
-}
-
-#expand-content {
-	position: relative;
-	float: left;
-	height: 29px; /* temp */
-}
-
-#back {
-	background-image: url("icons/back.png");
-	background-size: auto 15px;
-}
-
-#forward {
-	background-image: url("icons/forward.png");
-	background-size: auto 15px;
-}
-
-#expand {
-	background-image: url("icons/expand.png");
-  background-size: auto 18px;
-	width: 10px;
-	float: left;
-}
-
-#expand:hover {
-	background-color: lightgray;
 }
 
 #center {
@@ -145,6 +118,7 @@ html, body {
 	height: calc(100% - 30px);
 	border: none;
 }
+
 #loading {
 	display: none;
 	width: 100%;
