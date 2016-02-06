@@ -27,6 +27,7 @@ chrome.storage.local.get('lastSite', function(object) {
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
+  // If the sender doesn't have a frame id, then we know it comes from the sidebar
   if (message.fromCnt && !sender.frameId) {
     $("#url").val(message.link);
     $("#loading").css("display", "none");

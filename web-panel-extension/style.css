@@ -145,6 +145,7 @@ html, body {
 	height: calc(100% - 30px);
 	border: none;
 }
+
 #loading {
 	display: none;
 	width: 100%;
