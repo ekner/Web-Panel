@@ -1,6 +1,6 @@
-warn that this extension may NOT load some sites, such as vk.com in description
-change user agent
-zoom
-
-Auto-reload options by righ-clicking on reload-button
-folder support?
+* Back and forward buttons
+* warn that this extension may NOT load some sites, such as vk.com in description
+* change user agent
+* zoom
+* Auto-reload options by righ-clicking on reload-button
+* folder support?
