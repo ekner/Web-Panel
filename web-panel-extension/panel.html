@@ -1,14 +1,32 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 <meta charset="utf-8">
 <div id="bar">
-	<button id="reload" title="Load the url"></button>
+  <button id="reload" title="Load the url"></button>
+  <div id="auto-reload">
+    <p class="title">Auto Reload</p>
+    <p class="close">✖</p>
+    
+    <p>Interval:</p>
+    <ul>
+      <li data-time="30">30 Seconds</li>
+      <li data-time="60">1 Minute</li>
+      <li data-time="300">5 Minutes</li>
+      <li data-time="600">10 Minutes</li>
+      <li data-time="1800">30 Minutes</li>
+      <li data-time="3600">1 Hour</li>
+      <li data-time="18000">5 Hours</li>
+      <li data-time="0">Custom...</li>
+    </ul>
+    
+    <p class="clear">Clear</p>
+  </div>
 
   <button id="bookmarks" title="Bookmarks"></button>
 
-	<div id="center">
-		<input id="url" type="text" placeholder="Url"></input>
-		<button id="add-bookmark" title="Add to bookmarks"></button>
-	</div>
+  <div id="center">
+    <input id="url" type="text" placeholder="Url"></input>
+    <button id="add-bookmark" title="Add to bookmarks"></button>
+  </div>
 </div>
 <div id="bookmarks-popup"></div>
 <iframe id="iframe" src=""></iframe>

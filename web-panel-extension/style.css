@@ -38,6 +38,60 @@ html, body {
 	float: left;
 }
 
+#auto-reload {
+  position: absolute;
+  padding: 5px;
+  font-size: 14px;
+  display: none;
+  background: #ff8f00;
+  border: 1px solid #494949;
+  z-index: 1000;
+  padding-top: 0px;
+}
+#auto-reload .title {
+  font-weight: 900;
+  margin-top: 6px;
+  margin-bottom: 0;
+  display: inline-block;
+}
+#auto-reload .close {
+  background: #B5B5B5;
+  cursor: pointer;
+  border: 1px dashed #494949;
+  padding: 3px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  margin-left: 4px;
+  display: inline-block;
+  font-size: 16px;
+}
+#auto-reload ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+#auto-reload li {
+  cursor: pointer;
+  margin-left: 0;
+  padding-left: 0;
+}
+#auto-reload li:hover {
+  color: gray !important;
+}
+#auto-reload .clear {
+  font-size: 14px;
+  border: 1px dashed #B5B5B5;
+  background: #E6E6E6;
+  padding: 5px;
+  text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 0;
+  cursor: pointer;
+  display: none;
+}
+
 #center {
 	overflow: hidden;
 }
