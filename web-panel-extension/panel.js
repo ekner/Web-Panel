@@ -181,7 +181,8 @@ function fadeIn()
 
 function fadeOut()
 {
-  $("#bookmarks-popup").fadeOut(100, function() {
+  $("#bookmarks-popup").fadeOut(100, function()
+  {
     //$("#bookmarks-popup").css("display", "none");
   });
   bookmarksPopupClosed = true;
