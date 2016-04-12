@@ -1,11 +1,4 @@
 var wpb; //web panel bookmarks folder id
-JAG HETER GUSTAV
-<<<<<<< 710803c68b21bb9e3f86f1b8ff1ee0e43c90cdb6
-
-chrome.storage.local.get('lastSite', function(object)
-{
-  if ( typeof object.lastSite === "undefined")
-=======
 var historyArray = new Array(); // History
 var currentPos = -1; // Current position in history
 
@@ -27,12 +20,7 @@ function storeHistory()
 
 chrome.storage.local.get('lastSite', function(object)
 {
-<<<<<<< 66d6a083efb6508728c3aabb235e3c21a9763222
-  if ( typeof object.lastSite == "undefined")
->>>>>>> Fixed coding style
-=======
   if ( typeof object.lastSite === "undefined")
->>>>>>> Fixed merge stuff
   {
     chrome.storage.local.set({'lastSite': 'example.com'});
     $("#url").val("example.com");
@@ -53,9 +41,6 @@ chrome.runtime.onMessage.addListener(function(message, sender)
     $("#url").val(message.link);
     $("#loading").css("display", "none");
 
-<<<<<<< 710803c68b21bb9e3f86f1b8ff1ee0e43c90cdb6
-    chrome.storage.local.set({'lastSite': $("#url").val() });
-=======
     // Check if the page was just reloaded:
     if (historyArray[historyArray.length - 1] != message.link)
     {
@@ -97,7 +82,6 @@ $("#forward").click(function()
     currentPos ++;
     $("#iframe").attr('src', historyArray[currentPos]);
     storeHistory();
->>>>>>> Fixed coding style
   }
 });
 
@@ -158,15 +142,7 @@ $("#add-bookmark").click(createBookmark);
 
 chrome.bookmarks.search("Web Panel extension", function(list)
 {
-<<<<<<< 66d6a083efb6508728c3aabb235e3c21a9763222
-<<<<<<< 710803c68b21bb9e3f86f1b8ff1ee0e43c90cdb6
   if (typeof list[0] === "undefined")
-=======
-  if (typeof list[0] == "undefined")
->>>>>>> Fixed coding style
-=======
-  if (typeof list[0] === "undefined")
->>>>>>> Fixed merge stuff
   {
     chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder)
     {
@@ -208,19 +184,9 @@ function loadBookmarks()
     {
       result.forEach(function(entry)
       {
-<<<<<<< 66d6a083efb6508728c3aabb235e3c21a9763222
-<<<<<<< 710803c68b21bb9e3f86f1b8ff1ee0e43c90cdb6
         if (typeof entry.url === "undefined")
           return; // If it's a folder, skip it
 
-=======
-        if (typeof entry.url == "undefined")
-=======
-        if (typeof entry.url === "undefined")
->>>>>>> Fixed merge stuff
-          return; // If it's a folder, skip it
-
->>>>>>> Fixed coding style
         var re = /(<([^>]+)>)/ig;
         entry.title = entry.title.replace(re, "");
         entry.url = entry.url.replace(re, "");
@@ -280,124 +246,6 @@ function fadeOut()
   bookmarksPopupClosed = true;
 }
 
-<<<<<<< 710803c68b21bb9e3f86f1b8ff1ee0e43c90cdb6
-/* Auto-refresh: */
-
-var displayAutoReload = true;
-var autoReload = false;
-
-function openAutoReload()
-{
-  displayAutoReload = false;
-
-  $("#auto-reload").css("left", event.pageX);
-  $("#auto-reload").css("top", event.pageY);
-
-  $("#auto-reload").css("display", "block");
-}
-
-function closeAutoReload()
-{
-  displayAutoReload = true;
-  $("#auto-reload").css("display", "none");
-}
-
-$("#reload").bind("contextmenu", function (event)
-{
-  event.preventDefault();
-
-  if (displayAutoReload)
-    openAutoReload();
-  else
-    closeAutoReload();
-});
-
-// The user should also be able to close with left click:
-$("#reload").click(function()
-{
-  if (!displayAutoReload)
-    closeAutoReload();
-});
-
-// And by pressing "close":
-$("#auto-reload .close").click(function()
-{
-  if (!displayAutoReload)
-    closeAutoReload();
-});
-
-function setReload(time, item)
-{
-  removeReload();
-
-  autoReload = setInterval(function()
-  {
-    changeUrl();
-  },
-  time * 1000);
-
-  $(item).css("color", "lightblue");
-  $("#reload").css("background-color", "lightblue");
-  $("#auto-reload .clear").css("display", "block");
-}
-
-function removeReload()
-{
-  $("#auto-reload li").css("color", "black");
-  $("#reload").css("background-color", "transparent");
-  $("#auto-reload .clear").css("display", "none");
-
-  if (autoReload != false)
-    clearInterval(autoReload);
-
-  closeAutoReload();
-}
-
-$("#auto-reload li").click(function()
-{
-  // The Value the user clicked on on the list:
-  var item = this;
-  var time = Number( $(this).attr("data-time") );
-
-  // Security, if the user has modified the HTML:
-  if (isNaN(time))
-    return;
-
-  if (time != 0)
-  {
-    setReload(time, item);
-  }
-  else
-  {
-    var lastCustomTime = "";
-    chrome.storage.local.get('lastCustomTime', function(object)
-    {
-      if ( typeof object.lastCustomTime !== "undefined")
-        lastCustomTime = object.lastCustomTime;
-    });
-
-    time = "";
-    var wrong = "";
-    while (time != null && time.match(/^\d+:\d+:\d+$/) == null || time == "0:0:0")
-    {
-      time = prompt(wrong + "Please enter the interval in this format: Hours:Minutes:Seconds", lastCustomTime);
-      wrong = "Wrong format specified.\n\n";
-    }
-    // If the user has pressed cancel on the prompt:
-    if (time == null)
-      return;
-
-    chrome.storage.local.set({'lastCustomTime': time});
-    var values = time.split(":");
-    time = Number(values[0]) * 3600 + Number(values[1]) * 60 + Number(values[2]);
-    setReload(time, item);
-  }
-});
-
-$("#auto-reload .clear").click(function()
-{
-  removeReload();
-=======
 var expandContentWidth = $("#expand-content").outerWidth();
 $("#expand-content").css({marginLeft: "-61px"});
 var expandOpen = false;
@@ -434,7 +282,6 @@ chrome.storage.local.get('expandOpen', function(object)
 {
   if ( object.expandOpen == "true")
     expand();
->>>>>>> Fixed coding style
 });
 
 /* Auto-refresh: */
