@@ -127,9 +127,8 @@ function loadBookmarks()
       result.forEach(function(entry)
       {
         if (typeof entry.url === "undefined")
-        {
           return; // If it's a folder, skip it
-        }
+          
         var re = /(<([^>]+)>)/ig;
         entry.title = entry.title.replace(re, "");
         entry.url = entry.url.replace(re, "");
