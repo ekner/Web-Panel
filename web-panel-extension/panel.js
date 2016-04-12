@@ -58,7 +58,7 @@ function createBookmark()
 {
   if ($("#url").val() != "")
   {
-    var title = prompt("Bookmark title:", $("#url").val() );
+    var title = prompt( "Bookmark title:", $("#url").val() );
     if (title == "")
     {
       alert("Please type a title for the bookmark. Press cancel on the next pop-up to escape.");
@@ -69,9 +69,7 @@ function createBookmark()
       chrome.bookmarks.create({'parentId': wpb, 'url': $("#url").val(), 'title': title}, function(result)
       {
         if (result === undefined)
-        {
           alert("Bookmark not created: " + chrome.extension.lastError.message);
-        }
       });
       loadBookmarks();
     }
