@@ -401,3 +401,8 @@ $("#auto-reload .clear").click(function()
 {
   removeReload();
 });
+
+$("#auto-reload .clear").click(function()
+{
+  removeReload();
+});
