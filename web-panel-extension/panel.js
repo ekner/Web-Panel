@@ -284,7 +284,9 @@ chrome.storage.local.get('expandOpen', function(object)
     expand();
 });
 
+/* ------------- */
 /* Auto-refresh: */
+/* ------------- */
 
 var displayAutoReload = true;
 var autoReload = false;
@@ -405,4 +407,48 @@ $("#auto-reload .clear").click(function()
 $("#auto-reload .clear").click(function()
 {
   removeReload();
+});
+
+/* ------------- */
+/* User-agent:   */
+/* ------------- */
+
+var userAgent;
+
+chrome.storage.local.get('userAgent', function(object)
+{
+  if ( typeof object.userAgent === "undefined")
+    updateUserAgent("desktop");
+  else
+    updateUserAgent(object.userAgent);
+});
+
+function updateUserAgent(agent)
+{
+  if (typeof agent !== "undefined")
+  {
+    chrome.storage.local.set({ 'userAgent': agent });
+    chrome.runtime.sendMessage({ userAgent: agent });
+    userAgent = agent;
+  }
+
+  if ( userAgent === "mobile")
+    $("#expand").css("background-color", "green");
+  else
+    $("#expand").css("background-color", "initial");
+
+  chrome.storage.local.get('userAgent', function(object)
+  {
+    console.log(object.userAgent);
+  });
+}
+
+$("#expand").bind("contextmenu", function (event)
+{
+  event.preventDefault();
+
+  if (userAgent === "mobile")
+    updateUserAgent("desktop");
+  else
+    updateUserAgent("mobile");
 });
