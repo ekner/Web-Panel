@@ -377,23 +377,23 @@ $("#auto-reload li").click(function()
     {
       if ( typeof object.lastCustomTime !== "undefined")
         lastCustomTime = object.lastCustomTime;
+
+      time = "";
+      var wrong = "";
+      while (time != null && time.match(/^\d+:\d+:\d+$/) == null || time == "0:0:0")
+      {
+        time = prompt(wrong + "Please enter the interval in this format: Hours:Minutes:Seconds", lastCustomTime);
+        wrong = "Wrong format specified.\n\n";
+      }
+      // If the user has pressed cancel on the prompt:
+      if (time == null)
+        return;
+
+      chrome.storage.local.set({'lastCustomTime': time});
+      var values = time.split(":");
+      time = Number(values[0]) * 3600 + Number(values[1]) * 60 + Number(values[2]);
+      setReload(time, item);
     });
-
-    time = "";
-    var wrong = "";
-    while (time != null && time.match(/^\d+:\d+:\d+$/) == null || time == "0:0:0")
-    {
-      time = prompt(wrong + "Please enter the interval in this format: Hours:Minutes:Seconds", lastCustomTime);
-      wrong = "Wrong format specified.\n\n";
-    }
-    // If the user has pressed cancel on the prompt:
-    if (time == null)
-      return;
-
-    chrome.storage.local.set({'lastCustomTime': time});
-    var values = time.split(":");
-    time = Number(values[0]) * 3600 + Number(values[1]) * 60 + Number(values[2]);
-    setReload(time, item);
   }
 });
 
