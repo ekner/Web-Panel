@@ -43,7 +43,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener
           if (headers[i].name.toLowerCase() == 'user-agent')
           {
             headers[i].value = "Mozilla/5.0 (Linux; Android 5.0; LG-D855 Build/LRX21R.A1445306351) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Mobile Safari/537.36 OPR/36.2.2126.102826";
-            console.log(details.tabId);
           }
         }
       }

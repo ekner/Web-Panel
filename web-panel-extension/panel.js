@@ -437,10 +437,6 @@ function updateUserAgent(agent)
   else
     $("#expand").css("background-color", "initial");
 
-  chrome.storage.local.get('userAgent', function(object)
-  {
-    console.log(object.userAgent);
-  });
 }
 
 $("#expand").bind("contextmenu", function (event)

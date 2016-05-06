@@ -1,17 +1,20 @@
-// Check if the window doen't have a parent and if that is toplevel:
+/* --------------------------------------- */
+/* This will be loaded each time the user
+/* visits a new page, like clicking a link
+/* --------------------------------------- */
+
+// Check if the window doen't have a parent and if that is toplevel,
+// so that we know that it comes from the sidebar:
 if (window !== window.top && window.parent == window.top)
 {
   // Then send the current site:
   chrome.runtime.sendMessage({fromCnt: 'newLink', link: document.URL});
 
-  // Check if mobile user agent should be set:
-  chrome.storage.local.get('userAgent', function(object)
+  window.addEventListener("click", myFunction);
+
+  function myFunction()
   {
-/*    if ( object.userAgent == "mobile")
-    {
-      var script = document.createElement("script");
-      script.text="navigator.__defineGetter__('userAgent', function () { return 'blablabla'; });";
-      document.getElementsByTagName("head")[0].appendChild(script);
-    }*/
-  });
+    chrome.runtime.sendMessage({fromCnt: 'newLink', link: document.URL});
+  }
+
 }
