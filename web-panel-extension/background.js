@@ -1,3 +1,4 @@
+// This removes x-frame restrictions on some sites (not all):
 chrome.webRequest.onHeadersReceived.addListener( function (details)
 {
   for (var i = 0; i < details.responseHeaders.length; ++i)
@@ -16,6 +17,7 @@ chrome.webRequest.onHeadersReceived.addListener( function (details)
 },
 ["blocking", "responseHeaders"]);
 
+// Get user agent change from panel.js:
 var userAgent = "";
 chrome.runtime.onMessage.addListener
 (
@@ -28,6 +30,7 @@ chrome.runtime.onMessage.addListener
 	}
 );
 
+// Set the right user agent when a page is loaded:
 chrome.webRequest.onBeforeSendHeaders.addListener
 (
   function(details)

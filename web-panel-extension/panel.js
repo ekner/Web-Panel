@@ -1,6 +1,7 @@
 var wpb; //web panel bookmarks folder id
 var historyArray = new Array(); // History
 var currentPos = -1; // Current position in history
+var loadingSlowTimeout;
 
 /* Get stored history information */
 chrome.storage.local.get(['historyArray', 'currentPos'], function(object)
@@ -12,7 +13,6 @@ chrome.storage.local.get(['historyArray', 'currentPos'], function(object)
   }
 });
 
-/* Function for storing current history information */
 function storeHistory()
 {
   chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
@@ -40,6 +40,8 @@ chrome.runtime.onMessage.addListener(function(message, sender)
   {
     $("#url").val(message.link);
     $("#loading").css("display", "none");
+    clearTimeout(loadingSlowTimeout);
+    $("#loadingSlow").css("display", "none");
 
     // Check if the page was just reloaded:
     if (historyArray[historyArray.length - 1] != message.link)
@@ -50,8 +52,8 @@ chrome.runtime.onMessage.addListener(function(message, sender)
         historyArray.length = currentPos + 1;
         historyArray.push(message.link);
 
-        // Max length 25:
-        if (historyArray.length > 25)
+        // Max length 50:
+        if (historyArray.length > 50)
           historyArray.shift();
         else
           currentPos++;
@@ -88,6 +90,10 @@ $("#forward").click(function()
 function changeUrl()
 {
   $("#loading").css("display", "block");
+  loadingSlowTimeout = setTimeout(function()
+  {
+    $("#loadingSlow").css("display", "block");
+  }, 8000);
 
   var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
 
@@ -96,6 +102,11 @@ function changeUrl()
   else
     $("#iframe").attr('src', $("#url").val());
 }
+
+$("#searchInstead").click(function()
+{
+  $("#iframe").attr('src', "https://www.google.com/#q=" + $("#url").val());
+});
 
 $("#reload").click(function()
 {
@@ -232,17 +243,13 @@ $("#bookmarks").click(function()
 
 function fadeIn()
 {
-  //$("#bookmarks-popup").css("display", "block");
   $("#bookmarks-popup").fadeIn(100);
   bookmarksPopupClosed = false;
 }
 
 function fadeOut()
 {
-  $("#bookmarks-popup").fadeOut(100, function()
-  {
-    //$("#bookmarks-popup").css("display", "none");
-  });
+  $("#bookmarks-popup").fadeOut(100);
   bookmarksPopupClosed = true;
 }
 
@@ -349,7 +356,7 @@ function setReload(time, item)
 function removeReload()
 {
   $("#auto-reload li").css("color", "black");
-  $("#reload").css("background-color", "transparent");
+  $("#reload").css("background-color", "#F2F2F2");
   $("#auto-reload .clear").css("display", "none");
 
   if (autoReload != false)
