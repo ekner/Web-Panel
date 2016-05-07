@@ -13,3 +13,8 @@ development version:
 1.2
   Now other protocols than http and https work. (file:// for example)
   Migrated to jQuery
+  Back and forward buttons
+  Auto reload
+  Ability to switch between mobile and desktop user agent
+  Now there’s a loading icon, so the user knows that something is happening. Also option to search instead.
+  A couple of bug fixes.
