@@ -171,7 +171,6 @@ html, body {
 #bookmarks-popup .box {
 	position: relative;
   height: 30px;
-	overflow: hidden;
 	cursor: pointer;
 }
 
@@ -193,10 +192,12 @@ html, body {
 }
 
 #bookmarks-popup .link {
-	display: inline-block;
   margin-left: 10px;
   margin: 5px;
   font-size: 15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 #iframe {
