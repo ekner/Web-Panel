@@ -22,8 +22,8 @@ chrome.storage.local.get('lastSite', function(object)
 {
   if ( typeof object.lastSite === "undefined")
   {
-    chrome.storage.local.set({'lastSite': 'example.com'});
-    $("#url").val("example.com");
+    chrome.storage.local.set({'lastSite': 'http://ekner.github.io/Web-Panel/welcome.html' });
+    $("#url").val("http://ekner.github.io/Web-Panel/welcome.html");
     changeUrl();
   }
   else

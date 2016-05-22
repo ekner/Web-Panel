@@ -1,3 +1,4 @@
 * warn that this extension may NOT load some sites, such as vk.com, in description
 * zoom
 * folder support?
+* update design for "search instead" and the auto reload pop-up

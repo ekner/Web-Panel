@@ -8,8 +8,6 @@
 1.1.2
   Bug: str.replace only returns value, so nothing is changed
 
-development version:
-
 1.2
   Now other protocols than http and https work. (file:// for example)
   Migrated to jQuery
@@ -18,3 +16,7 @@ development version:
   Ability to switch between mobile and desktop user agent
   Now there’s a loading icon, so the user knows that something is happening. Also option to search instead.
   A couple of bug fixes.
+
+development version:
+
+1.?

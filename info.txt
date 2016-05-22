@@ -7,12 +7,17 @@ Detailed description:
 With this extension, you can surf to any* website in the sidebar. You can also bookmark pages that you visit often. As the bookmarks relies on Opera's built in bookmark manager, they will automatically sync between your devices.
 
 Features:
- - Surf to any site in the sidebar
- - Bookmark sites that you visit often
- - Delete bookmarks by right-clicking on them
- - You can auto-reload a page by right-clicking the reload button.
- - If you right click the expand button (with three dots), you can enable mobile mode, which will make some websites use their mobile version, which often fits better in the Web Panel.
+ - Surf to any site in the sidebar.
+ - Bookmark sites that you visit often.
+ - Delete bookmarks by right-clicking on them.
+ - You can enable auto-reload for a page by right-clicking the reload button.
+ - Click the expand button (with three dots) to show the back and forward buttons.
+ - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
 
-If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (Also called "Imported bookmarks"), and enter the folder "Web Panel extension".
+If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (also called "Imported bookmarks"), and enter the folder "Web Panel extension".
 
-*Note! Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: <insert link>
+*Note! Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: http://ekner.github.io/Web-Panel/frame-res.html. Some of these are:
+
+* facebook.com
+* vk.com
+* github.com
