@@ -16,6 +16,7 @@
   Ability to switch between mobile and desktop user agent
   Now there’s a loading icon, so the user knows that something is happening. Also option to search instead.
   A couple of bug fixes.
+  Now theres a first-startup-page, and a fake protocol, "local://", that lets the user view the page.
 
 development version:
 
