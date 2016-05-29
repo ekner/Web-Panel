@@ -22,8 +22,8 @@ chrome.storage.local.get('lastSite', function(object)
 {
   if ( typeof object.lastSite === "undefined")
   {
-    chrome.storage.local.set({'lastSite': 'http://ekner.github.io/Web-Panel/welcome.html' });
-    $("#url").val("http://ekner.github.io/Web-Panel/welcome.html");
+    chrome.storage.local.set({'lastSite': 'local://welcome/index.html' });
+    $("#url").val("local://welcome/index.html");
     changeUrl();
   }
   else
@@ -87,20 +87,43 @@ $("#forward").click(function()
   }
 });
 
-function changeUrl()
+function setLoadingCover()
 {
   $("#loading").css("display", "block");
   loadingSlowTimeout = setTimeout(function()
   {
     $("#loadingSlow").css("display", "block");
   }, 8000);
+}
 
+function changeUrl()
+{
   var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
 
   if (search == null)
+  {
     $("#iframe").attr('src', "http://" + $("#url").val());
+    setLoadingCover();
+  }
   else
-    $("#iframe").attr('src', $("#url").val());
+  {
+    var search = $("#url").val().match(/^local:\/\//i);
+
+    if (search == null)
+    {
+      $("#iframe").attr('src', $("#url").val());
+      setLoadingCover();
+    }
+    else
+    {
+      $("#iframe").attr( 'src', chrome.extension.getURL( $("#url").val().substring(8) ) );
+
+      // If another web page is loading right now, the covers must be removed:
+      $("#loading").css("display", "none");
+      clearTimeout(loadingSlowTimeout);
+      $("#loadingSlow").css("display", "none");
+    }
+  }
 }
 
 $("#searchInstead").click(function()

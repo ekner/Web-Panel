@@ -1,0 +1,30 @@
+html, body {
+  font-family: Tahoma;
+  margin: 10px;
+  padding: 0;
+  font-size: 16px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+#top {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #EEEEEE;
+}
+
+#top div {
+  float: left;
+  width: 55%;
+  text-align: center;
+  font-size: 5vw;
+}
+
+#top img {
+  float: right;
+  width: 35%;
+  margin: 3%;
+}
