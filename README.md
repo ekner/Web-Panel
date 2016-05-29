@@ -6,7 +6,7 @@ Web Panel is an Opera sidebar extension. It allows you to visit web pages in the
 
 #### The regular way (stable)
 
-Download it from here: https://addons.opera.com/extensions/details/web-panel/
+<a href="https://addons.opera.com/extensions/details/web-panel/"><img src="https://dev.opera.com/extensions/branding-guidelines/addons_206x58_en@2x.png" width=250></a>
 
 #### From github, development version (unstable)
 
