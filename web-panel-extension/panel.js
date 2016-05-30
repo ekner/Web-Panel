@@ -90,6 +90,10 @@ $("#forward").click(function()
 function setLoadingCover()
 {
   $("#loading").css("display", "block");
+
+  // First clear the timeout if there already is one:
+  clearTimeout(loadingSlowTimeout);
+
   loadingSlowTimeout = setTimeout(function()
   {
     $("#loadingSlow").css("display", "block");
