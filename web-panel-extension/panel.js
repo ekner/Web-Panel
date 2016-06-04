@@ -106,7 +106,7 @@ function changeUrl()
 
   if (search == null)
   {
-    $("#iframe").attr('src', "http://" + $("#url").val());
+    setIframeUrl("http://" + $("#url").val());
     setLoadingCover();
   }
   else
@@ -115,12 +115,12 @@ function changeUrl()
 
     if (search == null)
     {
-      $("#iframe").attr('src', $("#url").val());
+      setIframeUrl($("#url").val());
       setLoadingCover();
     }
     else
     {
-      $("#iframe").attr( 'src', chrome.extension.getURL( $("#url").val().substring(8) ) );
+      setIframeUrl( chrome.extension.getURL( $("#url").val().substring(8) ) );
 
       // If another web page is loading right now, the covers must be removed:
       $("#loading").css("display", "none");
@@ -128,6 +128,24 @@ function changeUrl()
       $("#loadingSlow").css("display", "none");
     }
   }
+}
+
+function setIframeUrl(url)
+{
+  // If the page was reloaded, we must navigate to another page between.
+  // See bug #4 on github issues.
+  if (historyArray[historyArray.length - 1] == url)
+  {
+    //$("#iframe").attr('src', "");
+    // We also wait a bit:
+    setTimeout(function()
+    {
+      $("#iframe").attr('src', url);
+    },
+    100);
+  }
+  else
+    $("#iframe").attr('src', url);
 }
 
 $("#searchInstead").click(function()
