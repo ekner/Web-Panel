@@ -132,11 +132,11 @@ function changeUrl()
 
 function setIframeUrl(url)
 {
-  // If the page was reloaded, we must navigate to another page between.
+  // If the page was just reloaded, we must navigate to another page between.
   // See bug #4 on github issues.
   if (historyArray[historyArray.length - 1] == url)
   {
-    //$("#iframe").attr('src', "");
+    $("#iframe").attr('src', "");
     // We also wait a bit:
     setTimeout(function()
     {
