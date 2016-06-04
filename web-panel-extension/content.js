@@ -20,7 +20,7 @@ if (window !== window.top && window.parent == window.top)
   function waitAndSend()
   {
     if (waitTimeout !== false)
-      clearTimeout(wait);
+      clearTimeout(waitTimeout);
 
     waitTimeout = setTimeout(function()
     {
