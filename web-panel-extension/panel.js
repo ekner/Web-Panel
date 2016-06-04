@@ -132,9 +132,9 @@ function changeUrl()
 
 function setIframeUrl(url)
 {
-  // If the page was just reloaded, we must navigate to another page between.
+  // If the url contains a hash-tag, we must navigate to another page between.
   // See bug #4 on github issues.
-  if (historyArray[historyArray.length - 1] == url)
+  if (url.indexOf("#") != -1)
   {
     $("#iframe").attr('src', "");
     // We also wait a bit:
