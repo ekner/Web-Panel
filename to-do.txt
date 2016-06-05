@@ -1,2 +1,3 @@
+* Button/shortcut for "Open url in normal tab"
 * zoom
 * folder support?

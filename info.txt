@@ -10,7 +10,7 @@ Features:
  - Surf to any site in the sidebar.
  - Bookmark sites that you visit often.
  - Delete bookmarks by right-clicking on them.
- - You can enable auto-reload for a page by right-clicking the reload button.
+ - You can enable auto-reload for a page by right-clicking the reload button. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
  - Click the expand button (with three dots) to show the back and forward buttons.
  - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
 
@@ -21,3 +21,5 @@ If you want more advanced bookmark management features, go to Opera's built-in b
 * facebook.com
 * vk.com
 * github.com
+
+This extension is open source, and you can access the source at GitHub: https://github.com/ekner/Web-Panel
