@@ -21,5 +21,3 @@ If you want more advanced bookmark management features, go to Opera's built-in b
 * facebook.com
 * vk.com
 * github.com
-
-This extension is open source, and you can access the source at GitHub: https://github.com/ekner/Web-Panel
