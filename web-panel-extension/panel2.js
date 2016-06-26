@@ -1,56 +1,116 @@
-var wpb; //web panel bookmarks folder id
-var historyArray = [];
-var currentPos = -1; // Current position in history
-var loadingSlowTimeout;
+var panel = new function() {
+  var loadingSlowTimeout;
 
-// Get stored history information:
-chrome.storage.local.get(['historyArray', 'currentPos'], function(object)
-{
-  if ( typeof object.historyArray != "undefined" && typeof object.currentPos != "undefined")
+  var setLoadingCover = function()
   {
-    historyArray = object.historyArray;
-    currentPos = object.currentPos;
-  }
-});
+    $("#loading").css("display", "block");
 
-function storeHistory()
-{
-  chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
+    // First clear the timeout if there already is one:
+    clearTimeout(loadingSlowTimeout);
+
+    loadingSlowTimeout = setTimeout(function()
+    {
+      $("#loadingSlow").css("display", "block");
+    }, 8000);
+  }
+
+  var handleReceivedLink = function(message, sender) {
+    // If the sender doesn't have a frame id, then we know it comes from the sidebar
+    if (message.fromCnt && !sender.frameId)
+    {
+      $("#url").val(message.link);
+      $("#loading").css("display", "none");
+      clearTimeout(loadingSlowTimeout);
+      $("#loadingSlow").css("display", "none");
+
+      backAndForward.handleHistoryInformation(message.link);
+      chrome.storage.local.set({ 'lastSite': $("#url").val() });
+    }
+  }
+
+  var setLastSite = function(object) {
+    if ( typeof object.lastSite === "undefined") {
+      chrome.storage.local.set({'lastSite': 'local://welcome/index.html' });
+      $("#url").val("local://welcome/index.html");
+      changeUrl();
+    } else {
+      $("#url").val(object.lastSite);
+      changeUrl();
+    }
+  }
+
+  var bindUIActions = function() {
+
+  }
+
+  var init = function() {
+    bindUIActions();
+    chrome.runtime.onMessage.addListener(function() { handleReceivedLink(message, sender) });
+    chrome.storage.local.get('lastSite', function(object) { setLastSite(object) });
+  }
+
+  init();
 }
 
-chrome.storage.local.get('lastSite', function(object)
-{
-  if ( typeof object.lastSite === "undefined")
-  {
-    chrome.storage.local.set({'lastSite': 'local://welcome/index.html' });
-    $("#url").val("local://welcome/index.html");
-    changeUrl();
-  }
-  else
-  {
-    $("#url").val(object.lastSite);
-    changeUrl();
-  }
-});
+var urlBar = new function() {
 
-chrome.runtime.onMessage.addListener(function(message, sender)
-{
-  // If the sender doesn't have a frame id, then we know it comes from the sidebar
-  if (message.fromCnt && !sender.frameId)
-  {
-    $("#url").val(message.link);
-    $("#loading").css("display", "none");
-    clearTimeout(loadingSlowTimeout);
-    $("#loadingSlow").css("display", "none");
+  var bindUIActions = function() {
 
+  }
+
+  var init = function() {
+    bindUIActions();
+  }
+
+  init();
+}
+
+var backAndForward = new function() {
+  var historyArray = [];
+  var currentPos = -1; // Current position in history
+
+  var getStoredHistoryInformation = function (object) {
+    if ( typeof object.historyArray !== "undefined" && typeof object.currentPos !== "undefined") {
+      historyArray = object.historyArray;
+      currentPos = object.currentPos;
+    }
+  }
+
+  var backClicked = function() {
+    if (currentPos > 0) {
+      $("#loading").css("display", "block");
+      currentPos --;
+      $("#iframe").attr('src', historyArray[currentPos]);
+      storeHistory();
+    }
+  }
+
+  var forwardClicked = function() {
+    if (currentPos + 1 != historyArray.length) {
+      $("#loading").css("display", "block");
+      currentPos ++;
+      $("#iframe").attr('src', historyArray[currentPos]);
+      storeHistory();
+    }
+  }
+
+  var bindUIActions = function() {
+    $("#back").click(function() { backClicked() });
+    $("#forward").click(function() { forwardClicked() });
+  }
+
+  var init = function() {
+    bindUIActions();
+    chrome.storage.local.get(['historyArray', 'currentPos'], function(object) { getStoredHistoryInformation(object) });
+  }
+
+  this.handleHistoryInformation(link) {
     // Check if the page was just reloaded:
-    if (historyArray[historyArray.length - 1] != message.link)
-    {
+    if (historyArray[historyArray.length - 1] != link) {
       // Check if the page was navigated to via history buttons. Then it shouldn't be added to history again:
-      if (historyArray[currentPos] != message.link)
-      {
+      if (historyArray[currentPos] != link) {
         historyArray.length = currentPos + 1;
-        historyArray.push(message.link);
+        historyArray.push(link);
 
         // Max length 50:
         if (historyArray.length > 50)
@@ -60,44 +120,46 @@ chrome.runtime.onMessage.addListener(function(message, sender)
 
         storeHistory();
       }
-      chrome.storage.local.set({'lastSite': $("#url").val() });
     }
   }
-});
 
-$("#back").click(function()
-{
-  if (currentPos > 0)
-  {
-    $("#loading").css("display", "block");
-    currentPos --;
-    $("#iframe").attr('src', historyArray[currentPos]);
-    storeHistory();
+  init();
+}
+
+var autoReload = new function() {
+
+  var bindUIActions = function() {
+
   }
-});
 
-$("#forward").click(function()
-{
-  if (currentPos + 1 != historyArray.length)
-  {
-    $("#loading").css("display", "block");
-    currentPos ++;
-    $("#iframe").attr('src', historyArray[currentPos]);
-    storeHistory();
+  var init = function() {
+    bindUIActions();
   }
-});
 
-function setLoadingCover()
+  init();
+}
+
+var bookmarks = new function() {
+  var wpb; //web panel bookmarks folder id
+
+
+  var bindUIActions = function() {
+
+  }
+
+  var init = function() {
+    bindUIActions();
+  }
+
+  init();
+}
+
+
+
+
+function storeHistory()
 {
-  $("#loading").css("display", "block");
-
-  // First clear the timeout if there already is one:
-  clearTimeout(loadingSlowTimeout);
-
-  loadingSlowTimeout = setTimeout(function()
-  {
-    $("#loadingSlow").css("display", "block");
-  }, 8000);
+  chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
 }
 
 function changeUrl()
@@ -134,18 +196,15 @@ function setIframeUrl(url)
 {
   // If the url contains a hash-tag, we must navigate to another page between.
   // See bug #4 on github issues.
-  if (url.indexOf("#") != -1)
-  {
+  if (url.indexOf("#") != -1) {
     $("#iframe").attr('src', "");
     // We also wait a bit:
-    setTimeout(function()
-    {
+    setTimeout(function() {
       $("#iframe").attr('src', url);
-    },
-    100);
-  }
-  else
+    }, 100);
+  } else {
     $("#iframe").attr('src', url);
+  }
 }
 
 $("#searchInstead").click(function()
