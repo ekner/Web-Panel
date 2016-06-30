@@ -157,6 +157,8 @@ var bookmarks = new function() {
 
 
 
+
+
 function storeHistory()
 {
   chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
