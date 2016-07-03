@@ -213,6 +213,27 @@ var bookmarks = new function() {
       alert("You haven't entered a url.");
     }
   };
+  
+  var bookmarksSearched = function(list) {
+    if (typeof list[0] === "undefined") {
+      chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder) {
+        wpb = folder.id;
+        loadBookmarks();
+      });
+    } else {
+      chrome.bookmarks.get(list[0].parentId, function(parent) {
+        if (parent[0].title == "Trash") {
+          chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder) {
+            wpb = folder.id;
+            loadBookmarks();
+          });
+        } else {
+          wpb = list[0].id;
+          loadBookmarks();
+        }
+      });
+    }
+  }
 
   var bindUIActions = function() {
 
@@ -220,6 +241,8 @@ var bookmarks = new function() {
 
   var init = function() {
     bindUIActions();
+
+    chrome.bookmarks.search("Web Panel extension", function(list) { bookmarksSearched(list) });
   };
 
   init();
@@ -244,36 +267,6 @@ var bookmarks = new function() {
 
 $("#add-bookmark").click(createBookmark);
 
-chrome.bookmarks.search("Web Panel extension", function(list)
-{
-  if (typeof list[0] === "undefined")
-  {
-    chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder)
-    {
-      wpb = folder.id;
-      loadBookmarks();
-    });
-  }
-  else
-  {
-    chrome.bookmarks.get(list[0].parentId, function(parent)
-    {
-      if (parent[0].title == "Trash")
-      {
-        chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder)
-        {
-          wpb = folder.id;
-          loadBookmarks();
-        });
-      }
-      else
-      {
-        wpb = list[0].id;
-        loadBookmarks();
-      }
-    });
-  }
-});
 
 function loadBookmarks()
 {
