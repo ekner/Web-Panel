@@ -1,170 +1,56 @@
-"use strict";
+var wpb; //web panel bookmarks folder id
+var historyArray = [];
+var currentPos = -1; // Current position in history
+var loadingSlowTimeout;
 
-var panel = new function() {
-  var loadingSlowTimeout;
+// Get stored history information:
+chrome.storage.local.get(['historyArray', 'currentPos'], function(object)
+{
+  if ( typeof object.historyArray != "undefined" && typeof object.currentPos != "undefined")
+  {
+    historyArray = object.historyArray;
+    currentPos = object.currentPos;
+  }
+});
 
-  var setIframeUrl = function(url) {
-    // If the url contains a hash-tag, we must navigate to another page between.
-    // See bug #4 on github issues.
-    if (url.indexOf("#") != -1) {
-      $("#iframe").attr("src", "");
-      // We also wait a bit:
-      setTimeout(function() {
-        $("#iframe").attr("src", url);
-      }, 100);
-    } else {
-      $("#iframe").attr("src", url);
-    }
-  };
+function storeHistory()
+{
+  chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
+}
 
-  var changeUrl = function() {
-    var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
-
-    if (search == null) {
-      setIframeUrl("http://" + $("#url").val());
-      setLoadingCover();
-    } else {
-      search = $("#url").val().match(/^local:\/\//i);
-
-      if (search == null) {
-        setIframeUrl($("#url").val());
-        setLoadingCover();
-      } else {
-        setIframeUrl( chrome.extension.getURL( $("#url").val().substring(8) ) );
-
-        // If another web page is loading right now, the covers must be removed:
-        $("#loading").css("display", "none");
-        clearTimeout(loadingSlowTimeout);
-        $("#loadingSlow").css("display", "none");
-      }
-    }
-  };
-
-  var setLoadingCover = function() {
-    $("#loading").css("display", "block");
-
-    // First clear the timeout if there already is one:
-    clearTimeout(loadingSlowTimeout);
-
-    loadingSlowTimeout = setTimeout(function() {
-      $("#loadingSlow").css("display", "block");
-    }, 8000);
-  };
-
-  var handleReceivedLink = function(message, sender) {
-    // If the sender doesn't have a frame id, then we know it comes from the sidebar
-    if (message.fromCnt && !sender.frameId) {
-      $("#url").val(message.link);
-      $("#loading").css("display", "none");
-      clearTimeout(loadingSlowTimeout);
-      $("#loadingSlow").css("display", "none");
-
-      backAndForward.handleHistoryInformation(message.link);
-      chrome.storage.local.set({ "lastSite": $("#url").val() });
-    }
-  };
-
-  var setLastSite = function(object) {
-    if ( typeof object.lastSite === "undefined") {
-      chrome.storage.local.set({"lastSite": "local://welcome/index.html" });
-      $("#url").val("local://welcome/index.html");
-      changeUrl();
-    } else {
-      $("#url").val(object.lastSite);
-      changeUrl();
-    }
-  };
-
-  var searchInsteadClicked = function() {
-    $("#iframe").attr("src", "https://www.google.com/#q=" + $("#url").val());
-  };
-
-  var enterOnUrlBarPressed = function(event) {
-    if ( event.which == 13 ) {
-      event.preventDefault();
-      changeUrl();
-      return false;
-    }
-  };
-
-  var reloadClicked = function() {
+chrome.storage.local.get('lastSite', function(object)
+{
+  if ( typeof object.lastSite === "undefined")
+  {
+    chrome.storage.local.set({'lastSite': 'local://welcome/index.html' });
+    $("#url").val("local://welcome/index.html");
     changeUrl();
-  };
+  }
+  else
+  {
+    $("#url").val(object.lastSite);
+    changeUrl();
+  }
+});
 
-  var bindUIActions = function() {
-    $("#searchInstead").click(function() { searchInsteadClicked(); });
-    $("#reload").click(function() { reloadClicked(); });
-    $("#url").keypress(function(event) { enterOnUrlBarPressed(); });
-  };
+chrome.runtime.onMessage.addListener(function(message, sender)
+{
+  // If the sender doesn't have a frame id, then we know it comes from the sidebar
+  if (message.fromCnt && !sender.frameId)
+  {
+    $("#url").val(message.link);
+    $("#loading").css("display", "none");
+    clearTimeout(loadingSlowTimeout);
+    $("#loadingSlow").css("display", "none");
 
-  var init = function() {
-    bindUIActions();
-    chrome.runtime.onMessage.addListener(function(message, sender) { handleReceivedLink(message, sender); });
-    chrome.storage.local.get("lastSite", function(object) { setLastSite(object); });
-  };
-
-  init();
-};
-
-var urlBar = new function() {
-
-  var bindUIActions = function() {
-
-  };
-
-  var init = function() {
-    bindUIActions();
-  };
-
-  init();
-};
-
-var backAndForward = new function() {
-  var historyArray = [];
-  var currentPos = -1; // Current position in history
-
-  var getStoredHistoryInformation = function(object) {
-    if ( typeof object.historyArray !== "undefined" && typeof object.currentPos !== "undefined") {
-      historyArray = object.historyArray;
-      currentPos = object.currentPos;
-    }
-  };
-
-  var backClicked = function() {
-    if (currentPos > 0) {
-      $("#loading").css("display", "block");
-      currentPos --;
-      $("#iframe").attr("src", historyArray[currentPos]);
-      chrome.storage.local.set({"historyArray": historyArray, "currentPos": currentPos});
-    }
-  };
-
-  var forwardClicked = function() {
-    if (currentPos + 1 != historyArray.length) {
-      $("#loading").css("display", "block");
-      currentPos ++;
-      $("#iframe").attr("src", historyArray[currentPos]);
-      chrome.storage.local.set({"historyArray": historyArray, "currentPos": currentPos});
-    }
-  };
-
-  var bindUIActions = function() {
-    $("#back").click(function() { backClicked(); });
-    $("#forward").click(function() { forwardClicked(); });
-  };
-
-  var init = function() {
-    bindUIActions();
-    chrome.storage.local.get(["historyArray", "currentPos"], function(object) { getStoredHistoryInformation(object); });
-  };
-
-  this.handleHistoryInformation = function (link) {
     // Check if the page was just reloaded:
-    if (historyArray[historyArray.length - 1] != link) {
+    if (historyArray[historyArray.length - 1] != message.link)
+    {
       // Check if the page was navigated to via history buttons. Then it shouldn't be added to history again:
-      if (historyArray[currentPos] != link) {
+      if (historyArray[currentPos] != message.link)
+      {
         historyArray.length = currentPos + 1;
-        historyArray.push(link);
+        historyArray.push(message.link);
 
         // Max length 50:
         if (historyArray.length > 50)
@@ -172,101 +58,174 @@ var backAndForward = new function() {
         else
           currentPos++;
 
-        chrome.storage.local.set({"historyArray": historyArray, "currentPos": currentPos});
+        storeHistory();
       }
-    }
-  };
-
-  init();
-};
-
-var autoReload = new function() {
-
-  var bindUIActions = function() {
-
-  };
-
-  var init = function() {
-    bindUIActions();
-  };
-
-  init();
-};
-
-var bookmarks = new function() {
-  var wpb; //web panel bookmarks folder id
-
-  var createBookmark = function() {
-    if ($("#url").val() != "") {
-      var title = prompt( "Bookmark title:", $("#url").val() );
-      if (title == "") {
-        alert("Please type a title for the bookmark. Press cancel on the next pop-up to escape.");
-        createBookmark();
-      } else if (title != null) {
-        chrome.bookmarks.create({"parentId": wpb, "url": $("#url").val(), "title": title}, function(result) {
-          if (result === undefined)
-            alert("Bookmark not created: " + chrome.extension.lastError.message);
-        });
-        loadBookmarks();
-      }
-    } else {
-      alert("You haven't entered a url.");
-    }
-  };
-  
-  var bookmarksSearched = function(list) {
-    if (typeof list[0] === "undefined") {
-      chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder) {
-        wpb = folder.id;
-        loadBookmarks();
-      });
-    } else {
-      chrome.bookmarks.get(list[0].parentId, function(parent) {
-        if (parent[0].title == "Trash") {
-          chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder) {
-            wpb = folder.id;
-            loadBookmarks();
-          });
-        } else {
-          wpb = list[0].id;
-          loadBookmarks();
-        }
-      });
+      chrome.storage.local.set({'lastSite': $("#url").val() });
     }
   }
+});
 
-  var bindUIActions = function() {
+$("#back").click(function()
+{
+  if (currentPos > 0)
+  {
+    $("#loading").css("display", "block");
+    currentPos --;
+    $("#iframe").attr('src', historyArray[currentPos]);
+    storeHistory();
+  }
+});
 
-  };
+$("#forward").click(function()
+{
+  if (currentPos + 1 != historyArray.length)
+  {
+    $("#loading").css("display", "block");
+    currentPos ++;
+    $("#iframe").attr('src', historyArray[currentPos]);
+    storeHistory();
+  }
+});
 
-  var init = function() {
-    bindUIActions();
+function setLoadingCover()
+{
+  $("#loading").css("display", "block");
 
-    chrome.bookmarks.search("Web Panel extension", function(list) { bookmarksSearched(list) });
-  };
+  // First clear the timeout if there already is one:
+  clearTimeout(loadingSlowTimeout);
 
-  init();
-};
+  loadingSlowTimeout = setTimeout(function()
+  {
+    $("#loadingSlow").css("display", "block");
+  }, 8000);
+}
 
+function changeUrl()
+{
+  var search = $("#url").val().match(/^[a-zA-Z]+:\/\//i);
 
+  if (search == null)
+  {
+    setIframeUrl("http://" + $("#url").val());
+    setLoadingCover();
+  }
+  else
+  {
+    var search = $("#url").val().match(/^local:\/\//i);
 
+    if (search == null)
+    {
+      setIframeUrl($("#url").val());
+      setLoadingCover();
+    }
+    else
+    {
+      setIframeUrl( chrome.extension.getURL( $("#url").val().substring(8) ) );
 
+      // If another web page is loading right now, the covers must be removed:
+      $("#loading").css("display", "none");
+      clearTimeout(loadingSlowTimeout);
+      $("#loadingSlow").css("display", "none");
+    }
+  }
+}
 
+function setIframeUrl(url)
+{
+  // If the url contains a hash-tag, we must navigate to another page between.
+  // See bug #4 on github issues.
+  if (url.indexOf("#") != -1)
+  {
+    $("#iframe").attr('src', "");
+    // We also wait a bit:
+    setTimeout(function()
+    {
+      $("#iframe").attr('src', url);
+    },
+    100);
+  }
+  else
+    $("#iframe").attr('src', url);
+}
 
+$("#searchInstead").click(function()
+{
+  $("#iframe").attr('src', "https://www.google.com/#q=" + $("#url").val());
+});
 
+$("#reload").click(function()
+{
+  changeUrl();
+});
 
+$("#url").keypress(function( event )
+{
+  if ( event.which == 13 )
+  {
+     event.preventDefault();
+     changeUrl();
+     return false;
+  }
+});
 
-
-
-
-
-
-
-
-
+function createBookmark()
+{
+  if ($("#url").val() != "")
+  {
+    var title = prompt( "Bookmark title:", $("#url").val() );
+    if (title == "")
+    {
+      alert("Please type a title for the bookmark. Press cancel on the next pop-up to escape.");
+      createBookmark();
+    }
+    else if (title != null)
+    {
+      chrome.bookmarks.create({'parentId': wpb, 'url': $("#url").val(), 'title': title}, function(result)
+      {
+        if (result === undefined)
+          alert("Bookmark not created: " + chrome.extension.lastError.message);
+      });
+      loadBookmarks();
+    }
+  }
+  else
+  {
+    alert("You haven't entered a url.");
+  }
+}
 
 $("#add-bookmark").click(createBookmark);
 
+chrome.bookmarks.search("Web Panel extension", function(list)
+{
+  if (typeof list[0] === "undefined")
+  {
+    chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder)
+    {
+      wpb = folder.id;
+      loadBookmarks();
+    });
+  }
+  else
+  {
+    chrome.bookmarks.get(list[0].parentId, function(parent)
+    {
+      if (parent[0].title == "Trash")
+      {
+        chrome.bookmarks.create({'title': 'Web Panel extension'}, function(folder)
+        {
+          wpb = folder.id;
+          loadBookmarks();
+        });
+      }
+      else
+      {
+        wpb = list[0].id;
+        loadBookmarks();
+      }
+    });
+  }
+});
 
 function loadBookmarks()
 {

@@ -119,6 +119,7 @@ html, body {
 	position: relative;
 	float: left;
 	height: 29px; /* temp */
+  margin-left: "-61px";
 }
 
 #back {
