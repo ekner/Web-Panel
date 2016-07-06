@@ -119,7 +119,6 @@ html, body {
 	position: relative;
 	float: left;
 	height: 29px; /* temp */
-  margin-left: "-61px";
 }
 
 #back {
@@ -134,7 +133,7 @@ html, body {
 
 #expand {
 	background-image: url("icons/expand.png");
- background-size: auto 18px;
+ 	background-size: auto 18px;
 	width: 10px;
 	float: left;
 }

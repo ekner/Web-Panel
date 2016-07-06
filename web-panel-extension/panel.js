@@ -79,26 +79,10 @@ var panel = new function()
     expandOpen = !expandOpen;
   };
 
-  var setExpand = function(object)
+  var handleReceivedExpandState = function(object)
   {
     if ( object.expandOpen === 'true')
       expand();
-  };
-
-  var bindUIActions = function()
-  {
-    $('#searchInstead').click(function() { searchInsteadClicked(); });
-    $('#reload').click(function() { panel.loadURL(); });
-    $('#url').keypress(function(event) { keyOnUrlBarPressed(); });
-    $('#expand').click(function() { expand(); });
-  };
-
-  var init = function()
-  {
-    bindUIActions();
-    chrome.runtime.onMessage.addListener(function(message, sender) { handleReceivedLink(message, sender); });
-    chrome.storage.local.get('lastSite', function(object) { setLastSite(object); });
-    chrome.storage.local.get('expandOpen', function(object) { setExpand(object); });
   };
 
   this.loadURL = function()
@@ -149,6 +133,23 @@ var panel = new function()
         $('#loadingSlow').css('display', 'none');
       }
     }
+  };
+
+  var bindUIActions = function()
+  {
+    $('#searchInstead').click(function() { searchInsteadClicked(); });
+    $('#reload').click(function() { panel.loadURL(); });
+    $('#url').keypress(function(event) { keyOnUrlBarPressed(event); });
+    $('#expand').click(function() { expand(); });
+  };
+
+  var init = function()
+  {
+    bindUIActions();
+    chrome.runtime.onMessage.addListener(function(message, sender) { handleReceivedLink(message, sender); });
+    chrome.storage.local.get('lastSite', function(object) { setLastSite(object); });
+    chrome.storage.local.get('expandOpen', function(object) { handleReceivedExpandState(object); });
+    $('#expand-content').css('marginLeft', '-61px'); // This can't be set in the css-file for some reason.
   };
 
   init();
@@ -291,11 +292,9 @@ var autoReload = new function()
     closeAutoReload();
   };
 
-  var reloadItemClicked = function()
+  var reloadItemClicked = function(item)
   {
-    // The value the user clicked on in the list:
-    var item = this;
-    var time = Number( $(this).attr('data-time') );
+    var time = Number( $(item).attr('data-time') );
 
     // Security, if the user has modified the HTML:
     if (isNaN(time))
@@ -337,7 +336,7 @@ var autoReload = new function()
   {
     $('#reload').bind('contextmenu', function(event) { leftClickOnRelad(event); });
     $('#auto-reload .clear').click(function() { removeReload(); });
-    $('#auto-reload li').click(function() { reloadItemClicked(); });
+    $('#auto-reload li').click(function() { reloadItemClicked(this); });
     $('#reload').click(function() { closeAutoReloadClicked(); }); // The user should be able to close with left click
     $('#auto-reload .close').click(function() { closeAutoReloadClicked(); }); // And by pressing 'close'
   };
@@ -496,7 +495,6 @@ var bookmarks = new function()
 
   init();
 };
-
 
 var userAgent = new function()
 {
