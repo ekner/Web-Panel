@@ -85,6 +85,23 @@ var panel = new function()
       expand();
   };
 
+  var bindUIActions = function()
+  {
+    $('#searchInstead').click(function() { searchInsteadClicked(); });
+    $('#reload').click(function() { panel.loadURL(); });
+    $('#url').keypress(function(event) { keyOnUrlBarPressed(event); });
+    $('#expand').click(function() { expand(); });
+  };
+
+  var init = function()
+  {
+    bindUIActions();
+    chrome.runtime.onMessage.addListener(function(message, sender) { handleReceivedLink(message, sender); });
+    chrome.storage.local.get('lastSite', function(object) { setLastSite(object); });
+    chrome.storage.local.get('expandOpen', function(object) { handleReceivedExpandState(object); });
+    $('#expand-content').css('marginLeft', '-61px'); // This can't be set in the css-file for some reason.
+  };
+
   this.loadURL = function()
   {
     var checkHashAndSet = function(url)
@@ -135,23 +152,6 @@ var panel = new function()
         $('#loadingSlow').css('display', 'none');
       }
     }
-  };
-
-  var bindUIActions = function()
-  {
-    $('#searchInstead').click(function() { searchInsteadClicked(); });
-    $('#reload').click(function() { panel.loadURL(); });
-    $('#url').keypress(function(event) { keyOnUrlBarPressed(event); });
-    $('#expand').click(function() { expand(); });
-  };
-
-  var init = function()
-  {
-    bindUIActions();
-    chrome.runtime.onMessage.addListener(function(message, sender) { handleReceivedLink(message, sender); });
-    chrome.storage.local.get('lastSite', function(object) { setLastSite(object); });
-    chrome.storage.local.get('expandOpen', function(object) { handleReceivedExpandState(object); });
-    $('#expand-content').css('marginLeft', '-61px'); // This can't be set in the css-file for some reason.
   };
 
   init();
