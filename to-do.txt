@@ -1,3 +1,5 @@
-* Button/shortcut for "Open url in normal tab"
-* zoom
+* bottom toolbar
+  * Button/shortcut for "Open url in normal tab"
+  * zoom
+  * enable tabs
 * folder support?

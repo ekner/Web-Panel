@@ -18,6 +18,9 @@ If you want more advanced bookmark management features, go to Opera's built-in b
 
 *Note! Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: https://github.com/ekner/Web-Panel/wiki/Why-are-some-pages-not-displayed%3F. Some of these are:
 
-* facebook.com
 * vk.com
+
+Sites that previously didn't work but now do are:
+
+* facebook.com
 * github.com
