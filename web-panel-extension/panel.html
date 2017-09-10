@@ -1,12 +1,13 @@
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="style.css">
+<link id="theme-link" rel="stylesheet" type="text/css" href="">
 <meta charset="utf-8">
 <div id="bar">
   <button id="reload" title="Load the url"></button>
   <div id="auto-reload">
     <p class="title">Auto Reload</p>
-    <p class="close">✖</p>
+    <div class="close"><p>✖</p></div>
 
-    <p>Interval:</p>
+    <p id="auto-reload-interval">Interval:</p>
     <ul>
       <li data-time="30">30 Seconds</li>
       <li data-time="60">1 Minute</li>
@@ -44,6 +45,13 @@
     <p>Search instead</p>
   </div>
   <h3 id="loadingSlow">It takes time to load this page. Check the url and/or your internet connection.</h3>
+</div>
+
+<div id="bottom-bar">
+	<div title="Toggle theme" id="toggle-theme"></div>
+	<input type="range" id="zoom" min="40" max="240" step="20" value="100">
+	<div id="zoom-hover"><p>100%</p></div>
+	<button title="Open in tab" id="open-in-tab"></button>
 </div>
 
 <script src="jquery-2.1.4.min.js"></script>

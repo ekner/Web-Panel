@@ -7,11 +7,12 @@
     "background": {"scripts": ["background.js"]},
     "developer": { "name": "Gustav Ekner" },
     "icons": {
-        "16": "icons/icon16.png",
-        "48": "icons/icon48.png",
-        "128": "icons/icon128.png"
+        "16": "icons/web-panel-16.png",
+        "48": "icons/web-panel-48.png",
+        "128": "icons/web-panel-128.png"
     },
     "minimum_opera_version": "30",
+	"options_page": "options/options.html",
 
     "permissions": [
         "storage",
@@ -22,7 +23,7 @@
     ],
 
     "sidebar_action": {
-        "default_icon": "icons/web.png",
+        "default_icon": "icons/web-panel-16.png",
         "default_title" : "Web Panel",
         "default_panel": "panel.html"
     },

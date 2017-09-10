@@ -1,0 +1,81 @@
+#bar, #bottom-bar, #auto-reload, #reload, #expand-content, #back, #forward, #expand, #bookmarks, #ceter, #url, #add-bookmark, #bookmarks-popup {
+	background-color: #5a5b5c;
+	color: #d9d9d9;
+}
+
+#bar {
+	border-bottom: 1px solid black;
+}
+
+#center {
+	border-left: 1px solid black;
+}
+
+#bookmarks-popup .box:hover .text-box {
+	background-color: gray;
+}
+
+#reload {
+	background-image: url("icons/reload_white.png");
+}
+
+#back {
+	background-image: url("icons/back_white.png");
+}
+
+#forward {
+	background-image: url("icons/forward_white.png");
+}
+
+#add-bookmark {
+	background-image: url("icons/add_white.png");
+}
+
+#expand {
+	background-image: url("icons/expand_white.png");
+	border-left: 1px solid black;
+}
+
+#auto-reload {
+	box-shadow: 0 0 4px 2px gray;
+	border: 1px solid black;
+}
+
+#auto-reload .close {
+	color: #363636;
+	background: gray;
+	border: 1px solid black;
+}
+
+#auto-reload li:hover {
+	color: white !important;
+}
+
+#auto-reload .clear {
+	background: #48494a;
+}
+
+#expand.mobile {
+	background-color: #42874d;
+}
+
+#add-bookmark {
+	border-right: 1px solid black;
+}
+
+#bottom-bar {
+	border-top: 1px solid black;
+}
+
+#bottom-bar #toggle-theme {
+	background: black;
+}
+
+#bottom-bar #zoom-hover p {
+	color: black;
+}
+
+#bottom-bar #open-in-tab {
+	background: url("icons/open_tab_white.png");
+	background-position: 0 -2px;
+}

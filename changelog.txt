@@ -21,4 +21,11 @@
 development version: (1.3)
 	Bug fixes
 	Facebook and github now works
-	
+	New icons and design
+	Added bottom bar:
+	  Option to switch to dark theme
+	  Zoom slider
+	  Open page in browser tab
+	Added options page:
+	  Ability to switch search engine
+	Preparations for firefox port.

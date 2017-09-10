@@ -5,17 +5,10 @@ a link. Then it will send the current url to the panel.js script. */
 // otherwise this is not the sidebar:
 if (window !== window.top && window.parent === window.top)
 {
-    if (document.URL.indexOf('web-panel-123'))
-    {
-        isSideBar();
-    }
-    else
-    {
-        chrome.runtime.sendMessage({fromCnt: 'isSideBar'}, function(response) {
-            // If we get a respond, we know this is the sidebar
-            isSideBar();
-        });
-    }
+    chrome.runtime.sendMessage({msg: 'isSideBar'}, function(response)
+	{
+        isSideBar(); // If we receive a respond, we know this is the sidebar
+    });
 }
 
 // Check if the window doen't have a parent and if that is toplevel,
@@ -30,16 +23,29 @@ function isSideBar()
     var url = document.URL;
 
     // Send the current site immediately when the page is loaded:
-    chrome.runtime.sendMessage({fromCnt: 'newLink', link: url});
+    chrome.runtime.sendMessage({msg: 'newLink', link: url});
 
     // And regularly check if the url changes, then send it again:
     setInterval(function()
     {
-        if (document.URL !== url) {
+        if (document.URL !== url)
+		{
             url = document.URL;
-            chrome.runtime.sendMessage({fromCnt: 'newLink', link: url});
+			chrome.runtime.sendMessage({msg: 'newLink', link: url}, function(response)
+			{
+				if (typeof response !== 'undefined')
+					handleReceivedLink(response);
+			});
         }
     }, 500);
+
+	var port = chrome.runtime.connect({name: "zoom"});
+	port.onMessage.addListener(handleMessage);
+}
+
+function handleMessage(message)
+{
+	document.body.style.zoom = message.zoomValue + '%';
 }
 
 function facebookPatch()

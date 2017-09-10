@@ -6,6 +6,7 @@ var panel = new function()
 	var expandOpen = false;
 	var frameId = false;
 	var startupLastSite;
+	var searchEngine;
 
 	var setLoadingCover = function()
 	{
@@ -21,37 +22,51 @@ var panel = new function()
 		8000);
 	};
 
-	var handleReceivedLink = function(message, sender, response)
+	var handleReceivedMessage = function(message, sender, response)
 	{
-		if (!message.fromCnt)
+		if (typeof message.msg === 'undefined')
 			return;
 
-		if (message.fromCnt === 'isSideBar')
+		if (message.msg === 'isSideBar')
 		{
 			if (!sender.frameId || sender.frameId === frameId)
 				response();
 		}
-        else if (message.fromCnt === 'newLink')
+		else if (message.msg === 'identify')
+		{
+			frameId = sender.frameId;
+			$('#url').val(startupLastSite);
+			panel.loadURL();
+		}
+        else if (message.msg === 'newLink')
         {
-			// Here we identify the frameId of the sidebar:
-			if (message.link.indexOf('web-panel-123') !== -1)
-			{
-				frameId = sender.frameId;
-				$('#url').val(startupLastSite);
-				panel.loadURL();
-			}
-			// If the sender doesn't have a frame id (opera), or the id matches the one we have figured
-			// out (firefox), we know the message comes from the side
-			else if (!sender.frameId || sender.frameId === frameId)
-			{
-				$('#url').val(message.link);
-				$('#loading').css('display', 'none');
-				clearTimeout(loadingSlowTimeout);
-				$('#loadingSlow').css('display', 'none');
+			handleNewLink(message, sender);
+		}
+		else if (message.msg === 'loadURL')
+		{
+			$('#url').val(message.URL);
+			panel.loadURL();
+		}
+		else if (message.msg === 'changeSearchEngine')
+		{
+			if (typeof message.engine !== 'undefined')
+				changeSearchEngine(message.engine);
+		}
+	};
 
-				backAndForward.handleHistoryInformation(message.link);
-				chrome.storage.local.set({ 'lastSite': $('#url').val() });
-			}
+	var handleNewLink = function(message, sender)
+	{
+		// If the sender doesn't have a frame id (opera), or the id matches the one we have figured
+		// out (firefox), we know the message comes from the side
+		if (!sender.frameId || sender.frameId === frameId)
+		{
+			$('#url').val(message.link);
+			$('#loading').css('display', 'none');
+			clearTimeout(loadingSlowTimeout);
+			$('#loadingSlow').css('display', 'none');
+
+			backAndForward.handleHistoryInformation(message.link);
+			chrome.storage.local.set({ 'lastSite': $('#url').val() });
 		}
 	};
 
@@ -69,12 +84,14 @@ var panel = new function()
 
 		setLoadingCover();
 		// go to a sample page so we can identify the frameId of the panel:
-		$('#iframe').attr('src', 'http://mozilla.org/web-panel-123');
+		$('#iframe').attr('src', chrome.extension.getURL('identify/web-panel-identify-content-script.html'));
 	};
 
 	var searchInsteadClicked = function()
 	{
-		$('#iframe').attr('src', 'https://www.google.com/#q=' + $('#url').val());
+		$('#url').val(getSearchEngineUrl( $('#url').val() ));
+		$('#loadingSlow').css('display', 'none');
+		panel.loadURL();
 	};
 
 	var keyOnUrlBarPressed = function(event)
@@ -97,15 +114,43 @@ var panel = new function()
 		else
 		{
 			chrome.storage.local.set({'expandOpen': 'false'});
-			$('#expand-content').animate( { marginLeft: '-61px' }, 200 );
+			$('#expand-content').animate( { marginLeft: '-71px' }, 200 );
 		}
 		expandOpen = !expandOpen;
 	};
 
 	var handleReceivedExpandState = function(object)
 	{
-		if ( object.expandOpen === 'true')
+		if (object.expandOpen === 'true')
 			expand();
+	};
+
+	var handleReceivedSearchEngine = function(object)
+	{
+		if (typeof object.searchEngine === 'undefined')
+			searchEngine = 'google';
+		else
+			searchEngine = object.searchEngine;
+	};
+
+	var getSearchEngineUrl = function(keyword)
+	{
+		if (searchEngine === 'google')
+			return 'https://www.google.com/#q=' + keyword;
+		else if (searchEngine === 'bing')
+			return 'https://www.bing.com/search?q=' + keyword;
+		else if (searchEngine === 'yahoo')
+			return 'https://search.yahoo.com/search?p=' + keyword;
+		else if (searchEngine === 'duckDuckGo')
+			return 'https://duckduckgo.com/?q=' + keyword;
+		else
+			return 'This search engine is not implemented'
+	};
+
+	var changeSearchEngine = function(engine)
+	{
+		searchEngine = engine;
+		chrome.storage.local.set({'searchEngine': engine});
 	};
 
 	var bindUIActions = function()
@@ -119,10 +164,11 @@ var panel = new function()
 	var init = function()
 	{
 		bindUIActions();
-		chrome.runtime.onMessage.addListener(function(message, sender, response) { handleReceivedLink(message, sender, response); });
+		chrome.runtime.onMessage.addListener(function(message, sender, response) { handleReceivedMessage(message, sender, response); });
 		chrome.storage.local.get('lastSite', function(object) { startup(object); });
 		chrome.storage.local.get('expandOpen', function(object) { handleReceivedExpandState(object); });
-		$('#expand-content').css('marginLeft', '-61px'); // This can't be set in the css-file for some reason.
+		chrome.storage.local.get('searchEngine', function(object) { handleReceivedSearchEngine(object); });
+		$('#expand-content').css('marginLeft', '-71px'); // This can't be set in the css-file for some reason.
 	};
 
 	this.loadURL = function()
@@ -175,6 +221,88 @@ var panel = new function()
 				$('#loadingSlow').css('display', 'none');
 			}
 		}
+	};
+
+	init();
+};
+
+var bottomBar = new function(data)
+{
+	this.currentTheme;
+	var port;
+
+	var setTheme = function(data)
+	{
+		if (typeof data.theme === 'undefined') {
+			data.theme = 'light';
+		}
+
+		chrome.storage.local.set({theme: data.theme});
+		bottomBar.currentTheme = data.theme;
+
+		if (data.theme === 'dark')
+			$('#theme-link').attr('href', 'dark-theme.css');
+		else
+			$('#theme-link').attr('href', '');
+	};
+
+	var handleConnection = function(_port)
+	{
+		port = _port;
+	}
+
+	var toggleTheme = function()
+	{
+		if (bottomBar.currentTheme === 'dark')
+			setTheme({theme: 'light'});
+		else
+			setTheme({theme: 'dark'});
+	};
+
+	var openUrlInTab = function()
+	{
+		chrome.tabs.create({url: $('#url').val()});
+	};
+
+	var zoomChanged = function()
+	{
+		port.postMessage({zoomValue: $(this).val()});
+		const zoomVal = $(this).val() + '%';
+		$('#bottom-bar #zoom-hover p').text(zoomVal);
+	};
+
+	var zoomHover = function()
+	{
+		$('#bottom-bar #zoom-hover').css('display', 'block');
+	};
+
+	var zoomUnHover = function()
+	{
+		$('#bottom-bar #zoom-hover').css('display', 'none');
+	};
+
+	var zoomHoverMove = function(e)
+	{
+		const boxHeight = $('#bottom-bar #zoom-hover').height() + 10;
+		$('#bottom-bar #zoom-hover').css('left', e.clientX);
+		$('#bottom-bar #zoom-hover').css('top', e.clientY - boxHeight);
+	};
+
+	var bindUIActions = function()
+	{
+		$('#bottom-bar #toggle-theme').click(toggleTheme);
+		$('#bottom-bar #open-in-tab').click(openUrlInTab);
+		$('#bottom-bar #zoom').change(zoomChanged);
+		$('#bottom-bar #zoom').mouseenter(zoomHover);
+		$('#bottom-bar #zoom').mouseleave(zoomUnHover);
+		$('#bottom-bar #zoom').mousemove(zoomHoverMove);
+	};
+
+	var init = function()
+	{
+		bindUIActions();
+		chrome.storage.local.get('theme', function(data) { setTheme(data) });
+		chrome.runtime.onConnect.addListener(handleConnection);
 	};
 
 	init();
@@ -258,7 +386,7 @@ var autoReload = new function()
 	var displayAutoReload = true;
 	var autoReload = false;
 
-	var openAutoReload = function()
+	var openAutoReload = function(event)
 	{
 		displayAutoReload = false;
 
@@ -285,7 +413,7 @@ var autoReload = new function()
 		event.preventDefault();
 
 		if (displayAutoReload)
-			openAutoReload();
+			openAutoReload(event);
 		else
 			closeAutoReload();
 	};
@@ -300,15 +428,15 @@ var autoReload = new function()
 		},
 		time * 1000);
 
-		$(item).css('color', 'lightblue');
-		$('#reload').css('background-color', 'lightblue');
+		$(item).css('color', '#8fc7c9');
+		$('#reload').addClass('mobile');
 		$('#auto-reload .clear').css('display', 'block');
 	};
 
 	var removeReload = function()
 	{
 		$('#auto-reload li').css('color', 'black');
-		$('#reload').css('background-color', '#F2F2F2');
+		$('#reload').removeClass('mobile');
 		$('#auto-reload .clear').css('display', 'none');
 
 		if (autoReload !== false)
@@ -456,11 +584,10 @@ var bookmarks = new function()
 					entry.title = entry.title.replace(re, '');
 					entry.url = entry.url.replace(re, '');
 
-					// ES6 multi-line string with backticks, Opera 28+:
 					content += '<div data-id="' + entry.id + '" title="' + entry.url + '" class="box">' +
-										 '<img class="favicon-img" src="http://www.google.com/s2/favicons?domain=' + entry.url + '"></img>' +
-										 '<div class="text-box"><p class="link">' + entry.title + '</p></div>' +
-										 '</div>';
+					           '<img class="favicon-img" src="http://www.google.com/s2/favicons?domain=' + entry.url + '"></img>' +
+					           '<div class="text-box"><p class="link">' + entry.title + '</p></div>' +
+					           '</div>';
 				});
 			}
 			$('#bookmarks-popup').html(content);
@@ -531,10 +658,10 @@ var userAgent = new function()
 			currentMode = agent;
 		}
 
-		if ( currentMode === 'mobile')
-			$('#expand').css('background-color', 'green');
+		if (currentMode === 'mobile')
+			$('#expand').addClass('mobile');
 		else
-			$('#expand').css('background-color', 'initial');
+			$('#expand').removeClass('mobile');
 	};
 
 	var handleReceivedUserAgent = function(object)
