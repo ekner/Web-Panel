@@ -27,7 +27,7 @@ function setTheme(data)
 
 function setSearchEngine(data)
 {
-	const searchEngine = typeof data.theme === 'undefined' ? 'google' : data.theme;
+	const searchEngine = typeof data.searchEngine === 'undefined' ? 'google' : data.searchEngine;
 	document.querySelector('#search-engine').value = searchEngine;
 }
 
