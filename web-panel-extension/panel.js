@@ -128,9 +128,14 @@ var panel = new function()
 	var handleReceivedSearchEngine = function(object)
 	{
 		if (typeof object.searchEngine === 'undefined')
+		{
 			searchEngine = 'google';
+			changeSearchEngine('google');
+		}
 		else
+		{
 			searchEngine = object.searchEngine;
+		}
 	};
 
 	var getSearchEngineUrl = function(keyword)
@@ -235,28 +240,30 @@ var bottomBar = new function(data)
 	{
 		if (typeof data.theme === 'undefined') {
 			data.theme = 'light';
+			chrome.storage.local.set({theme: data.theme});
 		}
 
-		chrome.storage.local.set({theme: data.theme});
 		bottomBar.currentTheme = data.theme;
 
 		if (data.theme === 'dark')
-			$('#theme-link').attr('href', 'dark-theme.css');
+			$('#theme-link').attr('href', 'style/dark-theme.css');
+		else if (data.theme === 'light-classic')
+			$('#theme-link').attr('href', 'style/light-theme-classic.css');
+		else if (data.theme === 'dark-classic')
+			$('#theme-link').attr('href', 'style/dark-theme-classic.css');
 		else
 			$('#theme-link').attr('href', '');
+	};
+
+	var reloadTheme = function(message, sender, response)
+	{
+		if (typeof message.msg !== 'undefined' && message.msg === 'reloadTheme')
+			chrome.storage.local.get('theme', function(data) { setTheme(data) });
 	};
 
 	var handleConnection = function(_port)
 	{
 		port = _port;
-	}
-
-	var toggleTheme = function()
-	{
-		if (bottomBar.currentTheme === 'dark')
-			setTheme({theme: 'light'});
-		else
-			setTheme({theme: 'dark'});
 	};
 
 	var openUrlInTab = function()
@@ -290,7 +297,7 @@ var bottomBar = new function(data)
 
 	var bindUIActions = function()
 	{
-		$('#bottom-bar #toggle-theme').click(toggleTheme);
+		$('#bottom-bar #options').click(function() { chrome.runtime.openOptionsPage(); });
 		$('#bottom-bar #open-in-tab').click(openUrlInTab);
 		$('#bottom-bar #zoom').change(zoomChanged);
 		$('#bottom-bar #zoom').mouseenter(zoomHover);
@@ -303,6 +310,7 @@ var bottomBar = new function(data)
 		bindUIActions();
 		chrome.storage.local.get('theme', function(data) { setTheme(data) });
 		chrome.runtime.onConnect.addListener(handleConnection);
+		chrome.runtime.onMessage.addListener(function(message, sender, response) { reloadTheme(message, sender, response); });
 	};
 
 	init();
@@ -429,14 +437,14 @@ var autoReload = new function()
 		time * 1000);
 
 		$(item).css('color', '#8fc7c9');
-		$('#reload').addClass('mobile');
+		$('#reload').addClass('status-auto');
 		$('#auto-reload .clear').css('display', 'block');
 	};
 
 	var removeReload = function()
 	{
 		$('#auto-reload li').css('color', 'black');
-		$('#reload').removeClass('mobile');
+		$('#reload').removeClass('status-auto');
 		$('#auto-reload .clear').css('display', 'none');
 
 		if (autoReload !== false)

@@ -1,4 +1,5 @@
 const engines = document.getElementById('search-engine');
+const themes = document.getElementById('theme');
 
 function viewHelp()
 {
@@ -11,5 +12,27 @@ function searchEngineSwitched()
 	chrome.runtime.sendMessage({msg: 'changeSearchEngine', engine: newEngine});
 }
 
+function themeSwitched()
+{
+	const newTheme = themes.options[themes.selectedIndex].value;
+	chrome.storage.local.set({theme: newTheme});
+	chrome.runtime.sendMessage({msg: 'reloadTheme'});
+}
+
+function setTheme(data)
+{
+	const theme = typeof data.theme === 'undefined' ? 'light' : data.theme;
+	document.querySelector('#theme').value = theme;
+}
+
+function setSearchEngine(data)
+{
+	const searchEngine = typeof data.theme === 'undefined' ? 'google' : data.theme;
+	document.querySelector('#search-engine').value = searchEngine;
+}
+
 document.getElementById('help-link').addEventListener('click', viewHelp);
 engines.addEventListener('change', searchEngineSwitched);
+themes.addEventListener ('change', themeSwitched);
+chrome.storage.local.get('theme',        function(data) { setTheme(data)        });
+chrome.storage.local.get('searchEngine', function(data) { setSearchEngine(data) });

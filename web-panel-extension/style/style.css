@@ -1,0 +1,322 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#bar {
+	z-index: 200;
+	position: relative;
+	height: 35px;
+	background-color: #f7f9fa;
+	border-bottom: 1px solid #c8cbcc;
+}
+
+#reload, #bookmarks, #add-bookmark, #expand, #back, #forward {
+	height: 100%;
+	width: 29px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #f7f9fa;
+}
+
+button {
+	outline: none;
+}
+
+#reload {
+	position: relative;
+	z-index: 10;
+	background-image: url("../icons/ikooni-outline/reload.png");
+	float: left;
+	background-position: 4px 1px;
+	width: 40px;
+}
+
+#reload.status-auto {
+	background-image: url("../icons/ikooni-outline/reload_auto.png");
+}
+
+#auto-reload {
+	position: absolute;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 14px;
+	display: none;
+	background: inherit;
+	border: 1px solid #c8cbcc;
+	box-shadow: 0 0 4px 2px lightgray;
+	z-index: 1000;
+	padding-top: 0px;
+}
+
+#auto-reload-interval {
+	margin: 3px;
+}
+
+#auto-reload .title {
+	font-weight: 900;
+	margin-top: 6px;
+	margin-bottom: 0;
+	display: inline-block;
+}
+
+#auto-reload .close {
+	background: lightgray;
+	cursor: pointer;
+	border: 1px solid gray;
+	padding: 3px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+	margin-left: 8px;
+	display: inline-block;
+	font-size: 16px;
+}
+
+#auto-reload .close p {
+	margin: 1px;
+	margin-top: 0;
+}
+
+#auto-reload ul {
+	list-style-type: none;
+	padding-left: 10px;
+}
+
+#auto-reload li {
+	cursor: pointer;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+#auto-reload li:hover {
+	color: gray !important;
+}
+
+#auto-reload .clear {
+	font-size: 14px;
+	border: 1px solid #B5B5B5;
+	background: #E6E6E6;
+	padding: 5px;
+	text-align: center;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 5px;
+	cursor: pointer;
+	display: none;
+}
+
+#center {
+	overflow: hidden;
+	border-left: 1px solid #c8cbcc;
+	height: 100%;
+}
+
+#url {
+	width: calc(100% - 37px);
+	position: relative;
+	float: left;
+	height: 100%;
+	border: none;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-size: 15px;
+	background-color: #f7f9fa;
+	top: -1px;
+}
+
+#url:focus {
+	outline: none;
+}
+
+#add-bookmark {
+	position: relative;
+	background-image: url("../icons/ikooni-outline/add.png");
+	background-position: 0px 1px;
+	margin-left: 0px;
+}
+
+#expand-content {
+	position: relative;
+	float: left;
+	height: 100%;
+}
+
+#back {
+	background-image: url("../icons/ikooni-outline/back.png");
+	position: relative;
+	left: -2px;
+	background-position: 0 1px;
+}
+
+#forward {
+	background-image: url("../icons/ikooni-outline/forward.png");
+	margin-right: 6px;
+	background-position: 0 1px;
+}
+
+#expand {
+	background-image: url("../icons/ikooni-outline/expand.png");
+	background-position: -8px 1px;
+	width: 17px;
+	height: 100%;
+	margin: 0;
+	float: left;
+	padding: 0;
+	border-left: 1px solid #c8cbcc;
+	background-color: #f7f9fa;
+}
+
+#expand.mobile {
+	background-color: #ade899;
+}
+
+#bookmarks {
+	background-image: url("../icons/ikooni-outline/bookmark.png");
+	float: right;
+	border-left: 1px solid #c8cbcc;
+	width: 40px;
+}
+
+#bookmarks-popup {
+	z-index: 100;
+	display: none;
+	width: 100%;
+	position: absolute;
+	top: 35px;
+	left: 0;
+	background: #f7f9fa;
+	box-shadow: 0 0 15px 4px gray;
+}
+
+#bookmarks-popup .box {
+	position: relative;
+	height: 35px;
+	cursor: pointer;
+}
+
+#bookmarks-popup .favicon-img {
+	position: absolute;
+	width: 16px;
+	top: 7px;
+	left: 7px;
+}
+
+#bookmarks-popup .text-box {
+	width: calc(100% - 35px);
+	position: absolute;
+	left: 30px;
+}
+
+#bookmarks-popup .box:hover .text-box {
+	background-color: lightgray;
+}
+
+#bookmarks-popup .link {
+	margin-left: 10px;
+	margin: 5px;
+	font-size: 15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#iframe {
+	width: 100%;
+	height: calc(100% - 70px);
+	border: none;
+}
+
+#loading {
+	display: none;
+	width: 100%;
+	height: calc(100% - 70px);
+	position: absolute;
+	top: 35px;
+	background-color: white;
+	background-image: url("../icons/load.gif");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#searchInstead {
+	margin-top: 20px;
+	cursor: pointer;
+	padding: 1px;
+	width: 150px;
+	background-color: #f7f9fa;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid #c8cbcc;
+	border-radius: 1px;
+}
+
+#searchInstead p {
+	font-size: 18px;
+	text-align: center;
+	margin: 4px;
+}
+
+#loadingSlow {
+	display: none;
+	padding: 20px;
+	padding-top: 0px;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+#bottom-bar {
+	height: 35px;
+	background-color: #f7f9fa;
+	border-top: 1px solid #c8cbcc;
+}
+
+#bottom-bar #options {
+	background-image: url("../icons/ikooni-outline/options.png");
+	display: inline-block;
+	margin-left: 10px;
+	height: 24px;
+	width: 24px;
+	margin-top: 4px;
+	/*background: white;*/
+}
+
+#bottom-bar #zoom {
+	position: relative;
+	margin: 2px;
+	top: -6px;
+	left: 10px;
+	padding 0;
+}
+
+#bottom-bar #zoom-hover {
+	display: none;
+	position: absolute;
+	background-color: lightgray;
+	border: 1px solid gray;
+	padding: 0;
+}
+
+#bottom-bar #zoom-hover p {
+	margin: 0;
+}
+
+#bottom-bar #open-in-tab {
+	background: url("../icons/ikooni-outline/open_tab.png");
+	float: right;
+	margin-right: 7px;
+	height: 25px;
+	width: 25px;
+	margin-top: 4px;
+	border: none;
+}

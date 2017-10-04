@@ -1,0 +1,92 @@
+#bar, #bottom-bar, #auto-reload, #reload, #expand-content, #back, #forward, #expand, #bookmarks, #ceter, #url, #add-bookmark, #bookmarks-popup {
+	background-color: #5a5b5c;
+	color: #d9d9d9;
+}
+
+#bar {
+	border-bottom: 1px solid black;
+}
+
+#center {
+	border-left: 1px solid black;
+}
+
+#bookmarks-popup .box:hover .text-box {
+	background-color: gray;
+}
+
+#reload {
+	background-image: url("../icons/classic/reload_dark.png");
+	background-position: 4px 2px;
+	width: 38px;
+}
+
+#back {
+	background-image: url("../icons/classic/back_dark.png");
+	background-position: 0px 2px;
+}
+
+#forward {
+	background-image: url("../icons/classic/forward_dark.png");
+	background-position: 0px 2px;
+}
+
+#add-bookmark {
+	background-image: url("../icons/classic/add_dark.png");
+}
+
+#bookmarks {
+	background-image: url("../icons/classic/bookmark.png");
+	width: 32px;
+}
+
+#expand {
+	background-image: url("../icons/classic/expand_dark.png");
+	background-position: 4px 2px;
+	border-left: 1px solid black;
+}
+
+#auto-reload {
+	box-shadow: 0 0 4px 2px gray;
+	border: 1px solid black;
+}
+
+#auto-reload .close {
+	color: #363636;
+	background: gray;
+	border: 1px solid black;
+}
+
+#auto-reload li:hover {
+	color: white !important;
+}
+
+#auto-reload .clear {
+	background: #48494a;
+}
+
+#expand.mobile {
+	background-color: #42874d;
+}
+
+#bookmarks {
+	border-left: 1px solid black;
+}
+
+#bottom-bar {
+	border-top: 1px solid black;
+}
+
+#bottom-bar #options {
+	background-image: url("../icons/ikooni-outline/options-classic-dark.png");
+}
+
+#bottom-bar #zoom-hover p {
+	color: black;
+}
+
+#bottom-bar #open-in-tab {
+	background: url("../icons/classic/open_tab_dark.png");
+	background-position: 0 -2px;
+	width: 28px;
+}
