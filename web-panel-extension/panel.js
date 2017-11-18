@@ -4,8 +4,6 @@ var panel = new function()
 {
 	var loadingSlowTimeout;
 	var expandOpen = false;
-	var frameId = false;
-	var startupLastSite;
 	var searchEngine;
 
 	var setLoadingCover = function()
@@ -29,17 +27,12 @@ var panel = new function()
 
 		if (message.msg === 'isSideBar')
 		{
-			if (!sender.frameId || sender.frameId === frameId)
+			// If the message has no frame id, we know it's from the sidebar:
+			if (!sender.frameId)
 				response();
 		}
-		else if (message.msg === 'identify')
+		else if (message.msg === 'newLink')
 		{
-			frameId = sender.frameId;
-			$('#url').val(startupLastSite);
-			panel.loadURL();
-		}
-        else if (message.msg === 'newLink')
-        {
 			handleNewLink(message, sender);
 		}
 		else if (message.msg === 'loadURL')
@@ -56,35 +49,31 @@ var panel = new function()
 
 	var handleNewLink = function(message, sender)
 	{
-		// If the sender doesn't have a frame id (opera), or the id matches the one we have figured
-		// out (firefox), we know the message comes from the side
-		if (!sender.frameId || sender.frameId === frameId)
-		{
-			$('#url').val(message.link);
-			$('#loading').css('display', 'none');
-			clearTimeout(loadingSlowTimeout);
-			$('#loadingSlow').css('display', 'none');
+		$('#url').val(message.link);
+		$('#loading').css('display', 'none');
+		clearTimeout(loadingSlowTimeout);
+		$('#loadingSlow').css('display', 'none');
 
-			backAndForward.handleHistoryInformation(message.link);
-			chrome.storage.local.set({ 'lastSite': $('#url').val() });
-		}
+		backAndForward.handleHistoryInformation(message.link);
+		chrome.storage.local.set({ 'lastSite': $('#url').val() });
 	};
 
 	var startup = function(lastSite)
 	{
+		var startupPage;
+
 		if (typeof lastSite.lastSite === 'undefined')
 		{
-			chrome.storage.local.set({'lastSite': 'local://welcome/index.html' });
-			startupLastSite = 'local://welcome/index.html';
+			startupPage = 'local://welcome/index.html';
+			chrome.storage.local.set({'lastSite': startupPage});	
 		}
 		else
 		{
-			startupLastSite = lastSite.lastSite;
+			startupPage = lastSite.lastSite;
 		}
 
-		setLoadingCover();
-		// go to a sample page so we can identify the frameId of the panel:
-		$('#iframe').attr('src', chrome.extension.getURL('identify/web-panel-identify-content-script.html'));
+		$('#url').val(startupPage);
+		panel.loadURL();
 	};
 
 	var searchInsteadClicked = function()
@@ -593,9 +582,9 @@ var bookmarks = new function()
 					entry.url = entry.url.replace(re, '');
 
 					content += '<div data-id="' + entry.id + '" title="' + entry.url + '" class="box">' +
-					           '<img class="favicon-img" src="http://www.google.com/s2/favicons?domain=' + entry.url + '"></img>' +
-					           '<div class="text-box"><p class="link">' + entry.title + '</p></div>' +
-					           '</div>';
+							   '<img class="favicon-img" src="http://www.google.com/s2/favicons?domain=' + entry.url + '"></img>' +
+							   '<div class="text-box"><p class="link">' + entry.title + '</p></div>' +
+							   '</div>';
 				});
 			}
 			$('#bookmarks-popup').html(content);
