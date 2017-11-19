@@ -71,6 +71,14 @@
 	background-image: url("../icons/ikooni-outline/options-dark.png");
 }
 
+#bottom-bar #zoom {
+	background: rgb(44, 44, 44);
+}
+
+#bottom-bar #zoom::-webkit-slider-thumb {
+	background: rgb(230, 230, 230);
+}
+
 #bottom-bar #zoom-hover p {
 	color: black;
 }
