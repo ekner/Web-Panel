@@ -312,7 +312,7 @@ var backAndForward = new function()
 
 	var getStoredHistoryInformation = function(object)
 	{
-		if ( typeof object.historyArray !== 'undefined' && typeof object.currentPos !== 'undefined')
+		if (typeof object.historyArray !== 'undefined' && typeof object.currentPos !== 'undefined')
 		{
 			historyArray = object.historyArray;
 			currentPos = object.currentPos;
@@ -341,6 +341,19 @@ var backAndForward = new function()
 		}
 	};
 
+	var handleReceivedMessage = function(message, sender, response)
+	{
+		if (message.msg === "clearAllHistory")
+			clearAllHistory();
+	};
+
+	var clearAllHistory = function()
+	{
+		historyArray = [];
+		currentPos = -1;
+		chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
+	};
+
 	var bindUIActions = function()
 	{
 		$('#back').click(function() { backClicked(); });
@@ -351,6 +364,7 @@ var backAndForward = new function()
 	{
 		bindUIActions();
 		chrome.storage.local.get(['historyArray', 'currentPos'], function(object) { getStoredHistoryInformation(object); });
+		chrome.runtime.onMessage.addListener(function(message, sender, response) { handleReceivedMessage(message, sender, response); });
 	};
 
 	this.handleHistoryInformation = function (link)

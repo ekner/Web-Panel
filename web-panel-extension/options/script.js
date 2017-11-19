@@ -31,7 +31,13 @@ function setSearchEngine(data)
 	document.querySelector('#search-engine').value = searchEngine;
 }
 
+function clearAllHistory()
+{
+	chrome.runtime.sendMessage({msg: 'clearAllHistory'});
+}
+
 document.getElementById('help-link').addEventListener('click', viewHelp);
+document.getElementById('clearAllHistory').addEventListener('click', clearAllHistory);
 engines.addEventListener('change', searchEngineSwitched);
 themes.addEventListener ('change', themeSwitched);
 chrome.storage.local.get('theme',        function(data) { setTheme(data)        });
