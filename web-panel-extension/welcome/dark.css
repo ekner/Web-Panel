@@ -1,0 +1,13 @@
+html, body {
+	background: rgb(30, 30, 30);
+	color: rgb(200, 200, 200);
+}
+
+li {
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+#top {
+	background: rgb(50, 50, 50);
+}

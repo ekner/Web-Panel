@@ -1,0 +1,43 @@
+html, body {
+	font-family: Tahoma;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+
+li {
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+#top {
+	position: relative;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #EEEEEE;
+	margin-bottom: 30px;
+}
+
+#top h2 {
+	margin-bottom: 0px;
+}
+
+#top h4 {
+	margin-top: 7px;
+}
+
+#top div {
+	float: left;
+	width: 55%;
+	text-align: center;
+	font-size: calc(12px + 1.5vw);
+}
+
+#top img {
+	position: absolute;
+	height: 80%;
+	right: 5%;
+	top: 9%;
+	max-width: 35%;
+}
