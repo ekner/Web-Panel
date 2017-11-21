@@ -18,7 +18,7 @@
 	A couple of bug fixes.
 	Now theres a first-startup-page, and a fake protocol, "local://", that lets the user view the page.
 
-development version: (1.3)
+1.3
 	Bug fixes
 	Facebook and github now works
 	New icons and design
@@ -30,3 +30,7 @@ development version: (1.3)
 	  Ability to switch search engine
 	  Ability to switch between four themes
 	  Go to home page
+	  Clear history
+	  
+development version:
+  

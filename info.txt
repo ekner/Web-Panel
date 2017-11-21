@@ -7,12 +7,13 @@ Detailed description:
 With this extension, you can surf to any* website in the sidebar. You can also bookmark pages that you visit often. As the bookmarks relies on Opera's built in bookmark manager, they will automatically sync between your devices.
 
 Features:
- - Surf to any site in the sidebar.
  - Bookmark sites that you visit often.
  - Delete bookmarks by right-clicking on them.
  - You can enable auto-reload for a page by right-clicking the reload button. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
  - Click the expand button (with three dots) to show the back and forward buttons.
  - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
+ - 4 different themes (light and dark).
+ - Search engines: Google, Yahoo, Bing & DuckDuckGo.
 
 If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (also called "Imported bookmarks"), and enter the folder "Web Panel extension".
 
