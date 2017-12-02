@@ -29,7 +29,7 @@
 	Added options page:
 	  Ability to switch search engine
 	  Ability to switch between four themes
-	  Go to home page
+	  Go to help page
 	  Clear history
 	  
 development version:
