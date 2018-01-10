@@ -40,10 +40,10 @@ var panel = new function()
 			$('#url').val(message.URL);
 			panel.loadURL();
 		}
-		else if (message.msg === 'changeSearchEngine')
+		else if (message.msg === 'updateSearchEngine')
 		{
 			if (typeof message.engine !== 'undefined')
-				changeSearchEngine(message.engine);
+				searchEngine = message.engine;
 		}
 	};
 
@@ -62,7 +62,7 @@ var panel = new function()
 	{
 		var startupPage;
 
-		if (typeof lastSite.lastSite === 'undefined')
+		if (typeof lastSite.lastSite === 'undefined' || lastSite.lastSite === '')
 		{
 			startupPage = 'local://welcome/index.html';
 			chrome.storage.local.set({'lastSite': startupPage});	
@@ -119,7 +119,7 @@ var panel = new function()
 		if (typeof object.searchEngine === 'undefined')
 		{
 			searchEngine = 'google';
-			changeSearchEngine('google');
+			chrome.storage.local.set({'searchEngine': searchEngine});
 		}
 		else
 		{
@@ -138,13 +138,7 @@ var panel = new function()
 		else if (searchEngine === 'duckDuckGo')
 			return 'https://duckduckgo.com/?q=' + keyword;
 		else
-			return 'This search engine is not implemented'
-	};
-
-	var changeSearchEngine = function(engine)
-	{
-		searchEngine = engine;
-		chrome.storage.local.set({'searchEngine': engine});
+			return 'This search engine is not implemented';
 	};
 
 	var bindUIActions = function()
@@ -343,15 +337,14 @@ var backAndForward = new function()
 
 	var handleReceivedMessage = function(message, sender, response)
 	{
-		if (message.msg === "clearAllHistory")
-			clearAllHistory();
+		if (message.msg === "clearLoadedHistory")
+			clearLoadedHistory();
 	};
 
-	var clearAllHistory = function()
+	var clearLoadedHistory = function()
 	{
 		historyArray = [];
 		currentPos = -1;
-		chrome.storage.local.set({'historyArray': historyArray, 'currentPos': currentPos});
 	};
 
 	var bindUIActions = function()

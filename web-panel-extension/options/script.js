@@ -9,7 +9,8 @@ function viewHelp()
 function searchEngineSwitched()
 {
 	const newEngine = engines.options[engines.selectedIndex].value;
-	chrome.runtime.sendMessage({msg: 'changeSearchEngine', engine: newEngine});
+	chrome.storage.local.set({'searchEngine': newEngine});
+	chrome.runtime.sendMessage({msg: 'updateSearchEngine', engine: newEngine});
 }
 
 function themeSwitched()
@@ -33,7 +34,8 @@ function setSearchEngine(data)
 
 function clearAllHistory()
 {
-	chrome.runtime.sendMessage({msg: 'clearAllHistory'});
+	chrome.storage.local.set({'historyArray': [], 'currentPos': -1, 'lastSite': ''});
+	chrome.runtime.sendMessage({msg: 'clearLoadedHistory'});
 }
 
 document.getElementById('help-link').addEventListener('click', viewHelp);
