@@ -23,14 +23,14 @@
 	Facebook and github now works
 	New icons and design
 	Added bottom bar:
-	  Button to navigate to the options page
-	  Zoom slider
-	  Button to open current page in browser tab
+		Button to navigate to the options page
+		Zoom slider
+		Button to open current page in browser tab
 	Added options page:
-	  Ability to switch search engine
-	  Ability to switch between four themes
-	  Go to help page
-	  Clear history
+		Ability to switch search engine
+		Ability to switch between four themes
+		Go to help page
+		Clear history
 	  
-development version:
-  
+development version (1.4):
+	Changed settings on the options page weren't applied if the sidebar wasn't open.
