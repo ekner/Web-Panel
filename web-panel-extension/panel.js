@@ -4,7 +4,7 @@ var panel = new function()
 {
 	var loadingSlowTimeout;
 	var expandOpen = false;
-	var searchEngine;
+	var searchEngine = {name: 'google', url: null};
 
 	var setLoadingCover = function()
 	{
@@ -117,28 +117,23 @@ var panel = new function()
 	var handleReceivedSearchEngine = function(object)
 	{
 		if (typeof object.searchEngine === 'undefined')
-		{
-			searchEngine = 'google';
 			chrome.storage.local.set({'searchEngine': searchEngine});
-		}
 		else
-		{
 			searchEngine = object.searchEngine;
-		}
 	};
 
 	var getSearchEngineUrl = function(keyword)
 	{
-		if (searchEngine === 'google')
+		if (searchEngine.name === 'google')
 			return 'https://www.google.com/#q=' + keyword;
-		else if (searchEngine === 'bing')
+		else if (searchEngine.name === 'bing')
 			return 'https://www.bing.com/search?q=' + keyword;
-		else if (searchEngine === 'yahoo')
+		else if (searchEngine.name === 'yahoo')
 			return 'https://search.yahoo.com/search?p=' + keyword;
-		else if (searchEngine === 'duckDuckGo')
+		else if (searchEngine.name === 'duckDuckGo')
 			return 'https://duckduckgo.com/?q=' + keyword;
 		else
-			return 'This search engine is not implemented';
+			return searchEngine.url.replace(/%s/, keyword);
 	};
 
 	var bindUIActions = function()

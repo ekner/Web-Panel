@@ -46,3 +46,14 @@ html, body {
 	text-align: left;
 	padding-left: 10px;
 }
+
+.search-engine-col * {
+	display: inline;
+	margin-right: 10px;
+}
+
+.search-engine-col h4 {
+	display: none;
+	color: #001dff;
+	cursor: pointer;
+}

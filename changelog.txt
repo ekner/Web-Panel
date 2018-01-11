@@ -33,4 +33,5 @@
 		Clear history
 	  
 development version (1.4):
-	Changed settings on the options page weren't applied if the sidebar wasn't open.
+	Added custom search engine feature.
+	Bug: Changed settings on the options page weren't applied if the sidebar wasn't open.
