@@ -53,7 +53,8 @@ function addCustomSearchEnginesToList()
 {
 	for (var name in customSearchEngines)
 	{
-		if (!customSearchEngines.hasOwnProperty(name)) continue;
+		if (!customSearchEngines.hasOwnProperty(name))
+			continue;
 
 		const option = document.createElement('option');
 		option.value = option.text = name;
@@ -62,7 +63,7 @@ function addCustomSearchEnginesToList()
 
 	const option = document.createElement('option');
 	option.value = 'custom';
-	option.text = 'Custom...';
+	option.text = 'New...';
 	enginesElem.add(option);
 
 	enginesElem.value = currentSearchEngine.name;
@@ -84,11 +85,13 @@ function searchEngineSwitched()
 	{
 		newEngineName = prompt('Enter a name for the new search engine:');
 		enginesElem.value = currentSearchEngine.name; // Reset the value from custom
-		if (newEngineName === 'custom' || newEngineName.search('"') !== -1)
+		if (newEngineName === null || newEngineName === '')
+			return;
+		else if (newEngineName === 'custom' || newEngineName.search('"') !== -1)
 			alert('The search engine name must not be set to "custom" or contain double quotes.');
 		else if (typeof customSearchEngines[newEngineName] !== 'undefined')
 			alert('A search engine with this name already exists.');
-		else if (newEngineName !== "" && newEngineName !== null)
+		else
 			addNewEngine(newEngineName);
 	}
 
@@ -113,6 +116,8 @@ function customEnginePanelDisplay()
 function addNewEngine(newEngineName)
 {
 	const newEngineUrl = prompt('Enter the url for the new search engine. Replace the keyword with "%s" (without quotes):');
+	if (newEngineUrl === null || newEngineUrl === '')
+		return;
 	const newEngine = {name: newEngineName, url: newEngineUrl};
 	customSearchEngines[newEngineName] = newEngineUrl;
 	chrome.storage.local.set({'customSearchEngines': customSearchEngines, 'searchEngine': newEngine });
@@ -139,14 +144,18 @@ function editCustomEngine()
 	if (typeof customSearchEngines[currentSearchEngine.name] !== 'undefined')
 	{
 		const newEngineName = prompt('Enter the new name for the search engine:', currentSearchEngine.name);
-		if (newEngineName === 'custom' || newEngineName.search('"') !== -1)
-		{
+
+		if (newEngineName === null || newEngineName === '')
+			return;
+		else if (newEngineName === 'custom' || newEngineName.search('"') !== -1)
 			alert('The search engine name must not be set to "custom" or contain double quotes.');
-		}
-		else if (newEngineName !== "" && newEngineName !== null)
+		else
 		{
-			delete customSearchEngines[currentSearchEngine.name];
 			const newEngineUrl = prompt('Enter the url for the search engine. Replace the keyword with "%s" (without quotes):', currentSearchEngine.url);
+			if (newEngineUrl === null || newEngineUrl === '')
+				return;
+
+			delete customSearchEngines[currentSearchEngine.name];
 			const newEngine = {name: newEngineName, url: newEngineUrl};
 			customSearchEngines[newEngineName] = newEngineUrl;
 			chrome.storage.local.set({'customSearchEngines': customSearchEngines, 'searchEngine': newEngine });
