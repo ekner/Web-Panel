@@ -9,7 +9,8 @@ if (window !== window.top && window.parent === window.top)
 {
 	chrome.runtime.sendMessage({msg: 'isSideBar'}, function(response)
 	{
-		isSideBar(); // If we receive a respond, we know this is the sidebar
+		if (response.isSideBar === true)
+			isSideBar();
 	});
 }
 

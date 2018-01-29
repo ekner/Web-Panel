@@ -29,7 +29,9 @@ var panel = new function()
 		{
 			// If the message has no frame id, we know it's from the sidebar:
 			if (!sender.frameId)
-				response();
+				response({isSideBar: true});
+			else
+				response({isSideBar: false});
 		}
 		else if (message.msg === 'newLink')
 		{
