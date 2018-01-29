@@ -22,6 +22,8 @@ function isSideBar()
 		facebookPatch();
 	if (location.href.indexOf('github.com') !== -1)
 		githubPatch();
+	if (location.href.indexOf('m.youtube.com') !== -1)
+		youtubeMobilePatch();
 
 	var url = document.URL;
 
@@ -76,4 +78,12 @@ function githubPatch()
 	var el = document.createElement('script');
 	el.textContent = 'window.alert = function(msg) { console.log("Alert: " + msg) };';
 	document.documentElement.insertBefore(el, document.documentElement.firstChild);
+}
+
+function youtubeMobilePatch()
+{
+	// YouTube tries to remove the document in different ways when in an iframe, so we overwrite some functions that can be used to clear the page:
+	var el = document.createElement('script');
+	el.textContent = 'window.document.close = function() {}; window.document.write = function() {}; window.document.open = function() {};';
+	document.documentElement.appendChild(el);
 }
