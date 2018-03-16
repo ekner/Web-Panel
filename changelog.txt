@@ -34,4 +34,6 @@
 	  
 development version (1.4):
 	Added custom search engine feature.
-	Bug: Changed settings on the options page weren't applied if the sidebar wasn't open.
+	Bug fixes:
+		Changed settings on the options page weren't applied if the sidebar wasn't open. (#13)
+		Address bar in web panel changed when navigating to certain pages outside the panel (#14)
