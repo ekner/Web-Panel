@@ -213,17 +213,16 @@ var panel = new function()
 
 var bottomBar = new function(data)
 {
-	this.currentTheme;
-	var port;
+	this.zoomValue = 100;
+	var port = false;
 
 	var setTheme = function(data)
 	{
-		if (typeof data.theme === 'undefined') {
+		if (typeof data.theme === 'undefined')
+		{
 			data.theme = 'light';
 			chrome.storage.local.set({theme: data.theme});
 		}
-
-		bottomBar.currentTheme = data.theme;
 
 		if (data.theme === 'dark')
 			$('#theme-link').attr('href', 'style/dark-theme.css');
@@ -243,7 +242,11 @@ var bottomBar = new function(data)
 
 	var handleConnection = function(_port)
 	{
-		port = _port;
+		if (_port.name === 'zoom')
+		{
+			port = _port;
+			port.postMessage({zoomValue: bottomBar.zoomValue});
+		}	
 	};
 
 	var openUrlInTab = function()
@@ -253,9 +256,12 @@ var bottomBar = new function(data)
 
 	var zoomChanged = function()
 	{
-		port.postMessage({zoomValue: $(this).val()});
-		const zoomVal = $(this).val() + '%';
+		bottomBar.zoomValue = $(this).val();
+		const zoomVal = bottomBar.zoomValue + '%';
 		$('#bottom-bar #zoom-hover p').text(zoomVal);
+
+		if (port !== false)
+			port.postMessage({zoomValue: bottomBar.zoomValue});
 	};
 
 	var zoomHover = function()
@@ -271,15 +277,15 @@ var bottomBar = new function(data)
 	var zoomHoverMove = function(e)
 	{
 		const boxHeight = $('#bottom-bar #zoom-hover').height() + 10;
-		$('#bottom-bar #zoom-hover').css('left', e.clientX);
-		$('#bottom-bar #zoom-hover').css('top', e.clientY - boxHeight);
+		$('#bottom-bar #zoom-hover').css('left', e.clientX + 3);
+		$('#bottom-bar #zoom-hover').css('top', e.clientY - boxHeight - 3);
 	};
 
 	var bindUIActions = function()
 	{
 		$('#bottom-bar #options').click(function() { chrome.runtime.openOptionsPage(); });
 		$('#bottom-bar #open-in-tab').click(openUrlInTab);
-		$('#bottom-bar #zoom').change(zoomChanged);
+		$('#bottom-bar #zoom').on('input', zoomChanged);
 		$('#bottom-bar #zoom').mouseenter(zoomHover);
 		$('#bottom-bar #zoom').mouseleave(zoomUnHover);
 		$('#bottom-bar #zoom').mousemove(zoomHoverMove);

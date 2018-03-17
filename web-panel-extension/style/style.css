@@ -288,7 +288,6 @@ button {
 	height: 24px;
 	width: 24px;
 	margin-top: 4px;
-	/*background: white;*/
 }
 
 #bottom-bar #zoom {
@@ -311,9 +310,9 @@ button {
 #bottom-bar #zoom-hover {
 	display: none;
 	position: absolute;
-	background-color: lightgray;
+	background-color: rgb(245, 245, 245);
 	border: 1px solid gray;
-	padding: 0;
+	padding: 4px;
 }
 
 #bottom-bar #zoom-hover p {
