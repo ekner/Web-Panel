@@ -529,7 +529,7 @@ var bookmarks = new function()
 				chrome.bookmarks.create({'parentId': wpb, 'url': $('#url').val(), 'title': title}, function(result)
 				{
 					if (result === undefined)
-						alert('Bookmark not created: ' + chrome.extension.lastError.message);
+						alert('Bookmark not created: ' + chrome.runtime.lastError.message);
 				});
 				loadBookmarks();
 			}
