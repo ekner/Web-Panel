@@ -12,8 +12,8 @@ Features:
  - You can enable auto-reload for a page by right-clicking the reload button. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
  - Click the expand button (with three dots) to show the back and forward buttons.
  - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
- - 4 different themes (light and dark).
- - Search engines: Google, Yahoo, Bing & DuckDuckGo.
+ - 4 different themes (2 light and 2 dark).
+ - Search engines: Google, Yahoo, Bing & DuckDuckGo. You can also add custom ones.
 
 If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (also called "Imported bookmarks"), and enter the folder "Web Panel extension".
 

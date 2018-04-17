@@ -1,8 +1,8 @@
-1.0:
+1.0
 	Navigate to websites
 	Basic bookmark-support
 
-1.1:
+1.1
 	Strip strings before displaying it (bookmarks)
 
 1.1.2
@@ -14,9 +14,9 @@
 	Back and forward buttons
 	Auto reload
 	Ability to switch between mobile and desktop user agent
-	Now there’s a loading icon, so the user knows that something is happening. Also option to search instead.
+	Now there's a loading icon, so the user knows that something is happening. Also option to search instead.
 	A couple of bug fixes.
-	Now theres a first-startup-page, and a fake protocol, "local://", that lets the user view the page.
+	First-startup page, and a fake protocol, "local://", that lets the user view the page.
 
 1.3
 	Bug fixes
@@ -32,7 +32,7 @@
 		Go to help page
 		Clear history
 	  
-development version (1.4):
+1.4
 	Added custom search engine feature.
 	Bug fixes:
 		Changed settings on the options page weren't applied if the sidebar wasn't open. (#13)
