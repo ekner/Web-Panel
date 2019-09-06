@@ -214,6 +214,7 @@ var panel = new function()
 var bottomBar = new function(data)
 {
 	this.zoomValue = 100;
+	this.currentTheme = '';
 	var port = false;
 
 	var setTheme = function(data)
@@ -223,6 +224,8 @@ var bottomBar = new function(data)
 			data.theme = 'light';
 			chrome.storage.local.set({theme: data.theme});
 		}
+
+		bottomBar.currentTheme = data.theme;
 
 		if (data.theme === 'dark')
 			$('#theme-link').attr('href', 'style/dark-theme.css');
@@ -435,14 +438,14 @@ var autoReload = new function()
 		},
 		time * 1000);
 
-		$(item).css('color', '#8fc7c9');
+		$(item).addClass('auto-reload-item-active');
 		$('#reload').addClass('status-auto');
 		$('#auto-reload .clear').css('display', 'block');
 	};
 
 	var removeReload = function()
 	{
-		$('#auto-reload li').css('color', 'black');
+		$('#auto-reload li').removeClass('auto-reload-item-active');
 		$('#reload').removeClass('status-auto');
 		$('#auto-reload .clear').css('display', 'none');
 

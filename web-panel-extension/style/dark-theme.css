@@ -1,5 +1,5 @@
 #bar, #bottom-bar, #auto-reload, #reload, #expand-content, #back, #forward, #expand, #bookmarks, #ceter, #url, #add-bookmark, #bookmarks-popup {
-	background-color: #5a5b5c;
+	background-color: #29343D;
 	color: #d9d9d9;
 }
 
@@ -42,8 +42,8 @@
 }
 
 #auto-reload .close {
-	color: #363636;
-	background: gray;
+	color: white;
+	background: rgb(28, 36, 43);
 	border: 1px solid black;
 }
 
@@ -52,7 +52,11 @@
 }
 
 #auto-reload .clear {
-	background: #48494a;
+	background: rgb(28, 36, 43);
+}
+
+.auto-reload-item-active {
+	color: #8fc7c9;
 }
 
 #expand.mobile {
@@ -72,7 +76,7 @@
 }
 
 #bottom-bar #zoom {
-	background: rgb(44, 44, 44);
+	background: rgb(0, 0, 0);
 }
 
 #bottom-bar #zoom::-webkit-slider-thumb {
