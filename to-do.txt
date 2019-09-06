@@ -1,4 +1,3 @@
 * Several tabs?
 * folder support?
-* firefox port?
 * find feature (ctrl + f)
