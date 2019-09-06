@@ -138,6 +138,54 @@ var panel = new function()
 			return searchEngine.url.replace(/%s/, keyword);
 	};
 
+	var checkCorrectPermissions = function(callback)
+	{
+		chrome.permissions.contains
+		(
+			{ origins: ['<all_urls>'] },
+			function(result)
+			{
+				if (result)
+				{
+					$('#incorrectPermissions').css('display', 'none');
+					callback();
+				}
+				else
+				{
+					$('#incorrectPermissions').css('display', 'block');
+				}
+			}
+		);
+	};
+
+	var checkHashAndSet = function(url, setLoadCover)
+	{
+		checkCorrectPermissions(function()
+		{
+			// If the url contains a hash-tag, we must navigate to another page between.
+			// See bug #4 on github issues.
+			if (url.indexOf('#') !== -1)
+			{
+				$('#iframe').attr('src', '');
+				// We also wait a bit:
+				setTimeout(function()
+				{
+					$('#iframe').attr('src', url);
+				}
+				, 100);
+			}
+			else
+			{
+				$('#iframe').attr('src', url);
+			}
+
+			$('#iframe').focus();
+
+			if (setLoadCover)
+				setLoadingCover();
+		});
+	};
+
 	var bindUIActions = function()
 	{
 		$('#searchInstead').click(function() { searchInsteadClicked(); });
@@ -158,34 +206,11 @@ var panel = new function()
 
 	this.loadURL = function()
 	{
-		var checkHashAndSet = function(url)
-		{
-			// If the url contains a hash-tag, we must navigate to another page between.
-			// See bug #4 on github issues.
-			if (url.indexOf('#') !== -1)
-			{
-				$('#iframe').attr('src', '');
-				// We also wait a bit:
-				setTimeout(function()
-				{
-					$('#iframe').attr('src', url);
-				}
-				, 100);
-			}
-			else
-			{
-				$('#iframe').attr('src', url);
-			}
-
-			$('#iframe').focus();
-		};
-
 		var search = $('#url').val().match(/^[a-zA-Z]+:\/\//i);
 
 		if (search == null)
 		{
-			checkHashAndSet('http://' + $('#url').val());
-			setLoadingCover();
+			checkHashAndSet('http://' + $('#url').val(), true);
 		}
 		else
 		{
@@ -193,12 +218,11 @@ var panel = new function()
 
 			if (search == null)
 			{
-				checkHashAndSet($('#url').val());
-				setLoadingCover();
+				checkHashAndSet($('#url').val(), true);
 			}
 			else
 			{
-				checkHashAndSet( chrome.extension.getURL( $('#url').val().substring(8) ) );
+				checkHashAndSet( chrome.extension.getURL( $('#url').val().substring(8) ), false );
 
 				// If another web page is loading right now, the covers must be removed:
 				$('#loading').css('display', 'none');
