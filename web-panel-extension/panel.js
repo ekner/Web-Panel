@@ -4,7 +4,7 @@ var panel = new function()
 {
 	var loadingSlowTimeout;
 	var expandOpen = false;
-	var searchEngine = {name: 'google', url: null};
+	var searchEngine = {name: 'ecosia', url: null};
 
 	var setLoadingCover = function()
 	{
@@ -119,6 +119,15 @@ var panel = new function()
 	var handleReceivedSearchEngine = function(object)
 	{
 		if (typeof object.searchEngine === 'undefined')
+		{
+			chrome.storage.local.set({'searchEngine': searchEngine});
+			return;
+		}
+			
+		const se = object.searchEngine;
+
+		// Check if the stored engine is an old (removed) default one. If so, replace it:
+		if (['google', 'bing', 'yahoo', 'duckDuckGo'].indexOf(se.name) !== -1 && se.url === null)
 			chrome.storage.local.set({'searchEngine': searchEngine});
 		else
 			searchEngine = object.searchEngine;
@@ -126,14 +135,12 @@ var panel = new function()
 
 	var getSearchEngineUrl = function(keyword)
 	{
-		if (searchEngine.name === 'google')
-			return 'https://www.google.com/#q=' + keyword;
-		else if (searchEngine.name === 'bing')
-			return 'https://www.bing.com/search?q=' + keyword;
-		else if (searchEngine.name === 'yahoo')
-			return 'https://search.yahoo.com/search?p=' + keyword;
-		else if (searchEngine.name === 'duckDuckGo')
-			return 'https://duckduckgo.com/?q=' + keyword;
+		if (searchEngine.name === 'ecosia')
+			return 'https://www.ecosia.org/search?q=' + keyword;
+		else if (searchEngine.name === 'startpage')
+			return 'https://www.startpage.com/do/search?q=' + keyword;
+		else if (searchEngine.name === 'aol')
+			return 'https://search.aol.com/aol/search?q=' + keyword;
 		else
 			return searchEngine.url.replace(/%s/, keyword);
 	};

@@ -24,6 +24,8 @@ function isSideBar()
 		githubPatch();
 	if (location.href.indexOf('m.youtube.com') !== -1)
 		youtubeMobilePatch();
+	if (location.href.indexOf('startpage.com') !== -1)
+		startpagePatch();
 
 	var url = document.URL;
 
@@ -86,4 +88,27 @@ function youtubeMobilePatch()
 	var el = document.createElement('script');
 	el.textContent = 'window.document.close = function() {}; window.document.write = function() {}; window.document.open = function() {};';
 	document.documentElement.appendChild(el);
+}
+
+function startpagePatch()
+{
+	// Startpage.com opens url's in regular tabs, we will block this and open them in the sidebar instead:
+	window.onload = function()
+	{
+		const allLinks = document.getElementsByTagName('a');
+
+		if (allLinks == null)
+			return;
+
+		for (var i = 0; i < allLinks.length; ++i)
+		{
+			const elem = allLinks[i];
+			
+			elem.onclick = function(e)
+			{
+				e.preventDefault();
+				chrome.runtime.sendMessage({msg: 'loadURL', URL: this.href});
+			};
+		}
+	};
 }

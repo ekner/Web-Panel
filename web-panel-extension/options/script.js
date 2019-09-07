@@ -7,14 +7,15 @@ const editEngineElem = document.getElementById('edit-engine');
 
 const defaultSearchEngineList =
 [
-	['google', 'Google Search'],
-	['bing', 'Bing'],
-	['yahoo', 'Yahoo!'],
-	['duckDuckGo', 'DuckDuckGo']
+	['ecosia', 'Ecosia'],
+	['startpage', 'Startpage.com'],
+	['aol', 'Aol']
 ];
 
+const standardDefaultSearchEngine = 'ecosia';
+
 var customSearchEngines = {};
-var currentSearchEngine = {name: 'google', url: null};
+var currentSearchEngine = {name: standardDefaultSearchEngine, url: null};
 
 document.getElementById('help-link').addEventListener('click', viewHelp);
 document.getElementById('clearAllHistory').addEventListener('click', clearAllHistory);
@@ -131,7 +132,7 @@ function deleteCustomEngine()
 	if (typeof customSearchEngines[currentSearchEngine.name] !== 'undefined')
 	{
 		delete customSearchEngines[currentSearchEngine.name];
-		const newEngine = {name: 'google', url: null};
+		const newEngine = {name: standardDefaultSearchEngine, url: null};
 		chrome.storage.local.set({'customSearchEngines': customSearchEngines, 'searchEngine': newEngine });
 		chrome.runtime.sendMessage({msg: 'updateSearchEngine', engine: newEngine});
 		currentSearchEngine = newEngine;
