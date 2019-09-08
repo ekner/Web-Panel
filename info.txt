@@ -4,24 +4,23 @@ Navigate to websites in the sidebar.
 
 Detailed description:
 
-With this extension, you can surf to any* website in the sidebar. You can also bookmark pages that you visit often. As the bookmarks relies on Opera's built in bookmark manager, they will automatically sync between your devices.
+With this extension, you can surf to any* website in the sidebar.
 
 Features:
- - Bookmark sites that you visit often.
- - Delete bookmarks by right-clicking on them.
+ - Bookmarking. Delete bookmarks by right-clicking on them. Bookmarks are stored in "Web Panel extension" in "Imported bookmarks".
  - You can enable auto-reload for a page by right-clicking the reload button. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
  - Click the expand button (with three dots) to show the back and forward buttons.
  - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
  - 4 different themes (2 light and 2 dark).
- - Search engines: Google, Yahoo, Bing & DuckDuckGo. You can also add custom ones.
+ - Search engines: Ecosia, Startpage.com and Aol. You can also add custom ones.
 
-If you want more advanced bookmark management features, go to Opera's built-in bookmark manager, click on "Other bookmarks" (also called "Imported bookmarks"), and enter the folder "Web Panel extension".
+*Note: Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: https://github.com/ekner/Web-Panel/wiki/Why-are-some-pages-not-displayed%3F. Some of these are:
+ - vk.com
+ - google.com (Only Google search; other services such as Keep and Calendar works)
+ - yahoo.com
+ - bing.com
+ - duckduckgo.com
+ - yandex.com
 
-*Note! Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: https://github.com/ekner/Web-Panel/wiki/Why-are-some-pages-not-displayed%3F. Some of these are:
-
-* vk.com
-
-Sites that previously didn't work but now do are:
-
-* facebook.com
-* github.com
+If you want to use one of the websites above for searching, you may use a regular tab for searching,
+and then open the correct page by pressing the left arrow button in the bottom bar.
