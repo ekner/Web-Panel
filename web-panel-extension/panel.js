@@ -288,6 +288,18 @@ var bottomBar = new function(data)
 		chrome.tabs.create({url: $('#url').val()});
 	};
 
+	var openTabInSidebar = function()
+	{
+		chrome.tabs.query({active: true}, function(tabs)
+		{
+			if (tabs.length < 1)
+				return;
+
+			$('#url').val(tabs[0].url);
+			panel.loadURL();
+		});
+	};
+
 	var zoomChanged = function()
 	{
 		bottomBar.zoomValue = $(this).val();
@@ -319,6 +331,7 @@ var bottomBar = new function(data)
 	{
 		$('#bottom-bar #options').click(function() { chrome.runtime.openOptionsPage(); });
 		$('#bottom-bar #open-in-tab').click(openUrlInTab);
+		$('#bottom-bar #open-tab-in-sidebar').click(openTabInSidebar);
 		$('#bottom-bar #zoom').on('input', zoomChanged);
 		$('#bottom-bar #zoom').mouseenter(zoomHover);
 		$('#bottom-bar #zoom').mouseleave(zoomUnHover);

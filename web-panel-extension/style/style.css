@@ -336,12 +336,22 @@ button {
 	margin: 0;
 }
 
-#bottom-bar #open-in-tab {
+#bottom-bar #open-in-tab, #bottom-bar #open-tab-in-sidebar {
 	background: url("../icons/ikooni-outline/open_tab.png");
 	float: right;
-	margin-right: 7px;
 	height: 25px;
 	width: 25px;
-	margin-top: 4px;
 	border: none;
 }
+
+#bottom-bar #open-in-tab {
+	margin-right: 7px;
+	margin-top: 4px;
+}
+
+#bottom-bar #open-tab-in-sidebar{
+	margin-right: 7px;
+	margin-top: 3px;
+	transform: rotate(180deg);
+}
+

@@ -102,3 +102,9 @@
 	background-position: 0 -2px;
 	width: 28px;
 }
+
+#bottom-bar #open-tab-in-sidebar {
+	background: url("../icons/classic/open_tab_dark.png");
+	background-position: 0 -2px;
+	width: 28px;
+}

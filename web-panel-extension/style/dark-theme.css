@@ -89,5 +89,8 @@
 
 #bottom-bar #open-in-tab {
 	background: url("../icons/ikooni-outline/open_tab_dark.png");
-	background-position: 0 -2px;
+}
+
+#bottom-bar #open-tab-in-sidebar {
+	background: url("../icons/ikooni-outline/open_tab_dark.png");
 }
