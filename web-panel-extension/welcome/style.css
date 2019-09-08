@@ -1,5 +1,5 @@
 html, body {
-	font-family: Tahoma;
+	font-family: Verdana;
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -15,8 +15,10 @@ li {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: #EEEEEE;
 	margin-bottom: 30px;
+	border-bottom: 1px solid #b3c1cb;
+	background: rgb(230,238,245);
+	background: linear-gradient(90deg, rgba(230,238,245,0.804359243697479) 0%, rgba(216,224,230,0.804359243697479) 100%);
 }
 
 #top h2 {
