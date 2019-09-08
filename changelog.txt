@@ -38,3 +38,13 @@
 		Changed settings on the options page weren't applied if the sidebar wasn't open. (#13)
 		Address bar in web panel changed when navigating to certain pages outside the panel (#14)
 		Fixed a variety of issues with the zoom feature.
+
+1.5
+	Updated themes for the new color schemes in Opera.
+	Now the extension warns if it doesn't have the required permissions.
+	Following Search engines removed because they don't work in the sidebar anymore:
+		 Google, Yahoo, Bing, DuckDuckGo
+	Following new search engines added:
+		Ecosia, Startpage.com, Aol
+	New Default search engine: Ecosia
+	New feature: Open current browser tab in Web Panel
