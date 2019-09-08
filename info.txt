@@ -7,12 +7,12 @@ Detailed description:
 With this extension, you can surf to any* website in the sidebar.
 
 Features:
- - Bookmarking. Delete bookmarks by right-clicking on them. Bookmarks are stored in "Web Panel extension" in "Imported bookmarks".
- - You can enable auto-reload for a page by right-clicking the reload button. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
- - Click the expand button (with three dots) to show the back and forward buttons.
- - If you right click the expand button, you can enable mobile mode (the button will become green), which will make some websites use their mobile version, which often fits better in the Web Panel. Remember that you also have to reload the page.
+ - Bookmarking. Bookmarks are stored in "Web Panel extension" in "Imported bookmarks".
+ - Auto reload. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
+ - Mobile mode. This will make some websites use their mobile version, which often fits better in the Web Panel.
  - 4 different themes (2 light and 2 dark).
  - Search engines: Ecosia, Startpage.com and Aol. You can also add custom ones.
+ - Page zoom.
 
 *Note: Some sites will not work in the sidebar. If you want to know why, you can have a more detailed explanation here: https://github.com/ekner/Web-Panel/wiki/Why-are-some-pages-not-displayed%3F. Some of these are:
  - vk.com
