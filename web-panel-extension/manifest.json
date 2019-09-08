@@ -3,7 +3,7 @@
 
     "name": "Web Panel",
     "description": "Navigate to websites in the sidebar.",
-    "version": "1.4",
+    "version": "1.5",
     "background": {"scripts": ["background.js"]},
     "developer": { "name": "Gustav Ekner" },
     "icons": {
