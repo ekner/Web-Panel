@@ -77,6 +77,12 @@
 	border-left: 1px solid black;
 }
 
+#loading {
+	background-color: #29343D;
+	color: #EEEEEE;
+	background-image: url("../icons/load-dark.gif");
+}
+
 #bottom-bar {
 	border-top: 1px solid black;
 }
