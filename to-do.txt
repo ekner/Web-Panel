@@ -1,3 +1,6 @@
 * Several tabs?
 * folder support?
 * find feature (ctrl + f)
+* Upgrade jQuery, as the current version contains vulnerabilities. Requested from the mods.
+* johanneswidm 28 Jun 2020, 13:49 "Is it possible to add the option to "focus the first input field" on a website when the sidebar opens?"
+* georgiii 22 Aug 2020, 18:10 "Could you add, that the web panel save the cookies settings"
