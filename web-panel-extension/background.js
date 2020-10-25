@@ -48,7 +48,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener
 			for (var i = 0; i < headers.length; i++)
 			{
 				if (headers[i].name.toLowerCase() === 'user-agent')
-					headers[i].value = 'Mozilla/5.0 (Linux; Android 7.0; EVA-L09 Build/HUAWEIEVA-L09) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 OPR/43.0.2246.121183';
+					headers[i].value = 'Mozilla/5.0 (Linux; Android 11; Pixel 4a) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.127 Mobile Safari/537.36 OPR/60.3.3004.55692';
 			}
 		}
 		return {requestHeaders: headers};
