@@ -14,7 +14,7 @@ html, body {
 	position: relative;
 	height: 35px;
 	background-color: #FFFFFF;
-	border-bottom: 1px solid #b3c1cb;
+	border-bottom: 1px solid #d7e2eb;
 }
 
 #reload, #bookmarks, #add-bookmark, #expand, #back, #forward {
@@ -123,7 +123,7 @@ button {
 
 #center {
 	overflow: hidden;
-	border-left: 1px solid #b3c1cb;
+	border-left: 1px solid #d7e2eb;
 	height: 100%;
 }
 
@@ -178,7 +178,7 @@ button {
 	margin: 0;
 	float: left;
 	padding: 0;
-	border-left: 1px solid #b3c1cb;
+	border-left: 1px solid #d7e2eb;
 	background-color: #FFFFFF;
 }
 
@@ -189,7 +189,7 @@ button {
 #bookmarks {
 	background-image: url("../icons/ikooni-outline/bookmark.png");
 	float: right;
-	border-left: 1px solid #b3c1cb;
+	border-left: 1px solid #d7e2eb;
 	width: 40px;
 }
 

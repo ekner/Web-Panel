@@ -1,10 +1,11 @@
 #bar, #bottom-bar, #auto-reload, #reload, #expand-content, #back, #forward, #expand, #bookmarks, #ceter, #url, #add-bookmark, #bookmarks-popup {
-	background-color: #29343D;
+	background-color: #384550;
 	color: #d9d9d9;
 }
 
 #bar {
 	border-bottom: 1px solid black;
+	border-top: 1px solid black;
 }
 
 #center {
