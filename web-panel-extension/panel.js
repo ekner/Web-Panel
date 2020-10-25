@@ -245,27 +245,28 @@ var panel = new function()
 var bottomBar = new function(data)
 {
 	this.zoomValue = 100;
-	this.currentTheme = '';
 	var port = false;
 
 	var setTheme = function(data)
 	{
 		if (typeof data.theme === 'undefined')
 		{
-			data.theme = 'light';
-			chrome.storage.local.set({theme: data.theme});
+			changeToDefaultTheme();
+			return;
 		}
 
-		bottomBar.currentTheme = data.theme;
-
-		if (data.theme === 'dark')
-			$('#theme-link').attr('href', 'style/dark-theme.css');
-		else if (data.theme === 'light-classic')
-			$('#theme-link').attr('href', 'style/light-theme-classic.css');
-		else if (data.theme === 'dark-classic')
-			$('#theme-link').attr('href', 'style/dark-theme-classic.css');
-		else
+		if (data.theme === 'light')
 			$('#theme-link').attr('href', '');
+		else if (data.theme === 'dark')
+			$('#theme-link').attr('href', 'style/dark-theme.css');
+		else
+			changeToDefaultTheme();
+	};
+
+	var changeToDefaultTheme = function()
+	{
+		chrome.storage.local.set({theme: 'light'});
+		$('#theme-link').attr('href', '');
 	};
 
 	var reloadTheme = function(message, sender, response)

@@ -4,9 +4,9 @@ function setTheme(data)
 		data.theme = 'light';
 	}
 
-	if (data.theme === 'dark' || data.theme === 'dark-classic')
+	if (data.theme === 'dark')
 		$('#theme-link').attr('href', 'dark.css');
-	else if (data.theme === 'light' || data.theme === 'light-classic')
+	else
 		$('#theme-link').attr('href', '');
 }
 
