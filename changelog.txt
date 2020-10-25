@@ -48,3 +48,9 @@
 		Ecosia, Startpage.com, Aol
 	New Default search engine: Ecosia
 	New feature: Open current browser tab in Web Panel
+
+1.6
+	Updated jQuery to 3.5.1
+	Removed the classic themes.
+	Updated the colors of existing themes to match Opera's colors.
+	Updated the mobile user agent string to a more recent device and version.

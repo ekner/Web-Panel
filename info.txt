@@ -10,7 +10,7 @@ Features:
  - Bookmarking. Bookmarks are stored in "Web Panel extension" in "Imported bookmarks".
  - Auto reload. This can be useful if you for example follow a live score system in the sidebar, but the page doesn't update the data automatically.
  - Mobile mode. This will make some websites use their mobile version, which often fits better in the Web Panel.
- - 4 different themes (2 light and 2 dark).
+ - Light and dark themes.
  - Search engines: Ecosia, Startpage.com and Aol. You can also add custom ones.
  - Page zoom.
 
