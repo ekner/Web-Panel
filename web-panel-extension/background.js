@@ -1,5 +1,7 @@
 'use strict';
 
+var headersToBlock = ['x-frame-options', 'frame-options', 'content-security-policy', 'x-content-type-options', 'x-xss-protection', 'x-content-security-policy'];
+
 // This removes x-frame restrictions on some sites (not all):
 chrome.webRequest.onHeadersReceived.addListener
 (
@@ -12,7 +14,7 @@ chrome.webRequest.onHeadersReceived.addListener
 		for (var i = headers.length - 1; i >= 0; --i)
 		{
 			var header = headers[i].name.toLowerCase();
-			if (header == 'x-frame-options' || header == 'frame-options' || header == 'content-security-policy' || header == 'x-content-type-options' || header == 'x-xss-protection' || header == 'x-content-security-policy')
+			if (headersToBlock.includes(header))
 				headers.splice(i, 1);
 		}
 		return {responseHeaders: headers};
@@ -20,7 +22,7 @@ chrome.webRequest.onHeadersReceived.addListener
 	{
 		urls: ['*://*/*']
 	},
-	['blocking', 'responseHeaders']
+	['blocking', 'responseHeaders', 'extraHeaders']
 );
 
 // Get user agent change from panel.js:
