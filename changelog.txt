@@ -54,3 +54,8 @@
 	Removed the classic themes.
 	Updated the colors of existing themes to match Opera's colors.
 	Updated the mobile user agent string to a more recent device and version.
+
+1.7
+	Updated jQuery to 3.6.0
+	Updated the mobile user agent string to a more recent device and version.
+	Updated the X-frame-restrictions blocker; youtube.com should now work.
