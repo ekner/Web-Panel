@@ -10,10 +10,10 @@ Web Panel is an Opera sidebar extension. It allows you to visit web pages in the
 
 #### From github, development version (unstable)
 
-1. Click the green "Clone or download" button, then "Download ZIP".
+1. Click the green "Code" button above, then "Download ZIP"
 2. Unpack the archive
 3. Go to opera://extensions
-4. Click "Developer Mode" at the top
+4. Toggle "Developer Mode" at the top if it's not active
 5. Click "Load Unpacked"
 6. Navigate to the previously extracted archive, and then to "web-panel-extension"
 7. Click "Open"
