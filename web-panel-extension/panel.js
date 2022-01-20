@@ -259,6 +259,8 @@ var bottomBar = new function(data)
 			$('#theme-link').attr('href', '');
 		else if (data.theme === 'dark')
 			$('#theme-link').attr('href', 'style/dark-theme.css');
+		else if (data.theme === 'gx')
+			$('#theme-link').attr('href', 'style/gx.css');
 		else
 			changeToDefaultTheme();
 	};

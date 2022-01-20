@@ -4,10 +4,10 @@ function setTheme(data)
 		data.theme = 'light';
 	}
 
-	if (data.theme === 'dark')
-		$('#theme-link').attr('href', 'dark.css');
-	else
+	if (data.theme === 'light')
 		$('#theme-link').attr('href', '');
+	else
+		$('#theme-link').attr('href', 'dark.css');
 }
 
 function reloadTheme(message, sender, response)
