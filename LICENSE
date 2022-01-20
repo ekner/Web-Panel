@@ -8,12 +8,16 @@ EXCEPTIONS:
 
 The icon set "ikooni outline" in the folder
 web-panel-extension/icons/ikooni-outline is made by Laura Reen and can be found
-on the following address:
+at the following address:
 https://www.iconfinder.com/iconsets/ikooni-outline-free-basic
 It has the Creative Commons CC BY-NC 3.0 license;
 https://creativecommons.org/licenses/by-nc/3.0/
 Some of the icons have been modified with a different color to fit the
 extension better.
+
+The images GitHub_Logo.png and GitHub_Logo_White.png in the folder
+web-panel-extension/welcome belong to GitHub, Inc. The pictures and the license
+for them can be found at the following address: https://github.com/logos
 
 ------------------------------------- CODE -------------------------------------
 

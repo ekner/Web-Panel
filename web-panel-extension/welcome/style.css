@@ -43,3 +43,30 @@ li {
 	top: 9%;
 	max-width: 35%;
 }
+
+#github-text {
+	margin: 20px;
+}
+
+#github {
+	width: 150px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#github button {
+	border: 1px solid #4da1d5;
+	border-radius: 3px;
+	width: 100%;
+	height: 50px;
+	background-image: url("GitHub_Logo.png");
+	background-color: transparent;
+	background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: 90%;
+}
+
+#github button:hover {
+	cursor: pointer;
+	background-color: rgb(230, 234, 240);
+}

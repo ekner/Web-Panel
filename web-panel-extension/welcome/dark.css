@@ -11,3 +11,12 @@ li {
 #top {
 	background: rgb(50, 50, 50);
 }
+
+#github button {
+	border: 1px solid #4da1d5 !important;
+	background-image: url("GitHub_Logo_White.png");
+}
+
+#github button:hover {
+	background-color: #313131;
+}
