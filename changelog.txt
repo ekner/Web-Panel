@@ -59,3 +59,7 @@
 	Updated jQuery to 3.6.0
 	Updated the mobile user agent string to a more recent device and version.
 	Updated the X-frame-restrictions blocker; youtube.com should now work.
+
+1.8
+	Updated the mobile user agent string to a more recent device and version.
+	Added link to Github on the welcome page.
