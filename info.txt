@@ -25,4 +25,4 @@ Features:
 If you want to use one of the websites above for searching, you may use a regular tab for searching,
 and then open the correct page by pressing the left arrow button in the bottom bar.
 
-If you've found a bug in the extension, report it on github: https://github.com/ekner/Web-Panel
+If you've found a bug in the extension, report it on GitHub: https://github.com/ekner/Web-Panel
