@@ -84,6 +84,7 @@
 
 #bottom-bar #zoom {
 	background: rgb(0, 0, 0);
+	border: 1px solid #3076a5;
 }
 
 #bottom-bar #zoom::-webkit-slider-thumb {
