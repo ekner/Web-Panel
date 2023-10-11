@@ -27,11 +27,9 @@ var panel = new function()
 
 		if (message.msg === 'isSideBar')
 		{
-			// If the message has no frame id, we know it's from the sidebar:
-			if (!sender.frameId)
-				response({isSideBar: true});
-			else
-				response({isSideBar: false});
+			var panelIdentifier = chrome.runtime.getURL('/panel.html');
+			var isSideBar = sender.tab.url === panelIdentifier;
+			response({isSideBar});
 		}
 		else if (message.msg === 'newLink')
 		{
