@@ -1,5 +1,6 @@
-* Several tabs?
-* folder support?
-* find feature (ctrl + f)
-* johanneswidm 28 Jun 2020, 13:49 "Is it possible to add the option to "focus the first input field" on a website when the sidebar opens?"
-* georgiii 22 Aug 2020, 18:10 "Could you add, that the web panel save the cookies settings"
+* Migrate from jquery to vanilla javascript.
+* Migrate to V3 manifest
+    * Use new technique of removing x frame restrictions, see which websites work and which don't
+      (e.g. search engines might work again)
+* Go through current website patches and update/remove them.
+* Adjust themes to Opera default light/dark and to Opera GX.
