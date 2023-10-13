@@ -64,3 +64,6 @@
 	Updated the mobile user agent string to a more recent device and version.
 	Added link to Github on the welcome and options pages.
 	Added Opera GX Theme.
+
+1.9
+	Fixed bug where no site would load. (#24)
