@@ -4,3 +4,5 @@
       (e.g. search engines might work again)
 * Go through current website patches and update/remove them.
 * Adjust themes to Opera default light/dark and to Opera GX.
+* Update user agent
+* Fix all TODO:s
